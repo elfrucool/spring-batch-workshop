@@ -6,14 +6,14 @@ SPRING BATCH WORKSHOP
 
 1. PRACTICE 1: HELLO WORLD
     1. what's spring batch
-        1.0.1. some stories about batch processing:
+        1. some stories about batch processing:
             http://docs.spring.io/spring-batch/trunk/reference/html/spring-batch-intro.html
-        1.0.2. architecture big overview
+        1. architecture big overview
             http://docs.spring.io/spring-batch/trunk/reference/html/images/spring-batch-layers.png
-        1.0.3. jobs/steps/tasklets/chunks
+        1. jobs/steps/tasklets/chunks
             - http://image.slidesharecdn.com/con2818-javaee7batchprocessingintherealworld-141001120216-phpapp02/95/java-ee-7-batch-processing-in-the-real-world-11-638.jpg?cb=1412165041
             - http://cdn.infoq.com/statics_s1_20151224-0209/resource/news/2013/06/ee7-spring-batch/en/resources/jsr-352.jpg
-        1.0.4. why spring batch?
+        1. why spring batch?
             * modelling batch processes / batch patterns & language
             * validation
             * listeners for each part to add custom logic
