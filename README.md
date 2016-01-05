@@ -5,7 +5,7 @@ SPRING BATCH WORKSHOP
 =====================
 
 1. PRACTICE 1: HELLO WORLD
-    1.0. what's spring batch
+    1. what's spring batch
         1.0.1. some stories about batch processing:
             http://docs.spring.io/spring-batch/trunk/reference/html/spring-batch-intro.html
         1.0.2. architecture big overview
@@ -23,7 +23,7 @@ SPRING BATCH WORKSHOP
             * good transaction model
             * lots of already tuned components for reading/writing text files, csv, xml, database, jms, AMQP, web services, e-mail, etc...
 
-    1.1. dependencies (build.gradle + gradle.properties)
+    1. dependencies (build.gradle + gradle.properties)
         1.1.1. at the top: buildscript {...}
             -> download a special gradle plugin
         1.1.2. apply plugin: 'java' 
@@ -45,7 +45,7 @@ SPRING BATCH WORKSHOP
         1.1.10. import to IDEA
             -> guess what ...
 
-    1.2. infrastructure <-- job repo, etc.
+    1. infrastructure <-- job repo, etc.
         1.2.1. create class hello.BatchConfiguration 
             -> this hill have spring batch configuration
         1.2.2. annotate with @Configuration 
@@ -53,7 +53,7 @@ SPRING BATCH WORKSHOP
         1.2.3. annotate with @EnableBatchProcessing 
             -> to make spring batch infrastructure beans available
 
-    1.3. our beans: HelloWorlJob & Friends
+    1. our beans: HelloWorlJob & Friends
         1.3.1. @Bean: helloWorldTasklet (...) 
             -> our logic
         1.3.2. @Bean: helloStep (...) 
@@ -61,7 +61,7 @@ SPRING BATCH WORKSHOP
         1.3.3. @Bean: helloWorldJob (...) 
             -> job that we will launch
 
-    1.4. application
+    1. application
         1.4.1. hello.Application 
             -> our main class
         1.4.2. annotate with @SpringBootApplicatin 
@@ -71,7 +71,7 @@ SPRING BATCH WORKSHOP
         1.4.4. call SpringApplication.run(...) 
             -> to load spring context and execute job
 
-    1.5. launch application
+    1. launch application
         1.5.1. gradle build
             -> make the executable jar
         1.5.2. look for jar build/libs/my-spring-batch-app-0.1.0.jar
@@ -90,8 +90,8 @@ SPRING BATCH WORKSHOP
 WORKSHOP 2
 
 4. PRACTICE 4: MORE CUSTOMIZATIONS
-    4.1. validating using valang
-    4.2. passing values using contexts
+    4. validating using valang
+    4. passing values using contexts
 
 5. PRACTICE 5: PARALLELIZATION
 
