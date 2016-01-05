@@ -1,0 +1,10 @@
+### Gradle template
+.gradle
+build/
+gradle-app.setting
+
+### idea
+*.iml
+.idea
+/out/
+.idea_modules/
