@@ -23,14 +23,16 @@ So:
 
 ### why spring batch?
 
-* modelling batch processes / batch patterns & language
-* validation
-* listeners for each part to add custom logic
-* parallelization
-* traceability
-* restart interrupted jobs
-* good transaction model
-* lots of already tuned components for reading/writing text files, csv, xml, database, jms, AMQP, web services, e-mail, etc...
+Eight reasons to use spring batch:
+
+1. modelling batch processes / batch patterns & language
+1. validation
+1. listeners for each part to add custom logic
+1. parallelization
+1. traceability
+1. restart interrupted jobs
+1. good transaction model
+1. lots of already tuned components for reading/writing text files, csv, xml, database, jms, AMQP, web services, e-mail, etc...
 
 ## ENOUGH SPEAKING, START ACTION:
 
@@ -39,17 +41,20 @@ We will produce the classical _hello world_ in Spring Batch
 You need to perform the following 5 tasks:
 
 1. set up environment ([build.gradle][FILE-BUILD-GRADLE] + [gradle.properties][FILE-GRADLE-PROPERTIES])
-1. configure infrastructure <-- job repo, etc.
-1. build your beans: HelloWorlJob & Friends
-1. build the application
+1. configure infrastructure beans
+1. build your beans: HelloWorlJob & Friends <-- they will have your program's logic
+1. build the application code (who will launch your spring batch jobs?)
 1. launch the application
 
-### Let's start
+So let's start
 
-#### Task 1. set up environment ([build.gradle][FILE-BUILD-GRADLE] + [gradle.properties][FILE-GRADLE-PROPERTIES])
+### Task 1. set up environment ([build.gradle][FILE-BUILD-GRADLE] + [gradle.properties][FILE-GRADLE-PROPERTIES]
 
-You only need to follow the next 9 steps:
+We will set up a gradle project w/spring batch and import it to IntellijIDEA (or your favourite IDE). The two main files ([build.gradle][FILE-BUILD-GRADLE] and [gradle.properties][FILE-GRADLE-PROPERTIES]) have already all the necessary things, but it is worth for you if you try to write them from scratch.
 
+So for setting up the gradle project from scratch you only need to follow the next 10 steps:
+
+1. Create directory structure
 1. In file [build.gradle][FILE-BUILD-GRADLE]:  download a special gradle plugin
 1. In file [build.gradle][FILE-BUILD-GRADLE]:  apply gradle plugins
 1. In file [build.gradle][FILE-BUILD-GRADLE]:  configure jar packaging options
@@ -60,7 +65,24 @@ You only need to follow the next 9 steps:
 1. verify if all dependencies are available
 1. import to IDEA
 
-Detail:
+Steps in detail:
+
+1. Create directory structure
+
+    If you are in a bash terminal, you can create all of them with the following command:
+
+    ```sh
+    shell$ mkdir -pv src/{main,test}/{java/resources}
+    ```
+
+    The following directories must exist:
+
+    ```
+    src/main/java
+    src/main/resources
+    src/test/java
+    src/test/resources
+    ```
 
 1. In file [build.gradle][FILE-BUILD-GRADLE]:  download a special gradle plugin
     -> download a special gradle plugin
@@ -97,7 +119,7 @@ Detail:
     }
     ```
 
-    this is for making a single big fat jar: [more info](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Jar.html)
+    <strong>Rationale:</strong> this is for making a single big fat jar: [more info](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Jar.html)
 
 1. In file [build.gradle][FILE-BUILD-GRADLE]:  configure repositories
 
@@ -108,7 +130,7 @@ Detail:
     }
     ```
 
-    This tells gradle where to look for [dependencies][GRADLE-DEPENDENCIES]
+    <strong>Rationale:</strong> This tells gradle where to look for [dependencies][GRADLE-DEPENDENCIES]
 
 1. In file [build.gradle][FILE-BUILD-GRADLE]:  configure java version
 
@@ -117,7 +139,7 @@ Detail:
     targetCompatibility = 1.8
     ```
 
-    This is for use java8 (see: [Gradle Java Plugin][GRADLE-JAVA-PLUGIN])
+    <strong>Rationale:</strong> This is for use java8 (see: [Gradle Java Plugin][GRADLE-JAVA-PLUGIN])
 
 1. In file [build.gradle][FILE-BUILD-GRADLE]:  configure project dependencies
 
@@ -129,7 +151,7 @@ Detail:
     }
     ```
 
-    See: [Gradle Dependencies][GRADLE-DEPENDENCIES]
+    <strong>Rationale:</strong> See: [Gradle Dependencies][GRADLE-DEPENDENCIES]
 
 1. In file [gradle.properties][FILE-GRADLE-PROPERTIES]:  configure gradle daemon
 
@@ -138,7 +160,7 @@ Detail:
     org.gradle.workers.max=4 
     ```
 
-    [To use gradle daemon and make builds faster](https://docs.gradle.org/current/userguide/gradle_daemon.html)
+    <strong>Rationale:</strong> [To use gradle daemon and make builds faster](https://docs.gradle.org/current/userguide/gradle_daemon.html)
 
 1. verify if all dependencies are available
 
@@ -147,9 +169,9 @@ Detail:
 
 1. import to IDEA
 
-    -> guess what ...
+    See [this link](https://www.jetbrains.com/idea/help/importing-project-from-gradle-model.html)
 
-#### Task 2. configure infrastructure <-- job repo, etc.
+### Task 2. configure infrastructure <-- job repo, etc.
 
 1. create class hello.BatchConfiguration 
     -> this hill have spring batch configuration
@@ -158,7 +180,7 @@ Detail:
 1. annotate with @EnableBatchProcessing 
     -> to make spring batch infrastructure beans available
 
-#### Task 3. build your beans: HelloWorlJob & Friends
+### Task 3. build your beans: HelloWorlJob & Friends <-- they will have your program's logic
 
 1. @Bean: helloWorldTasklet (...) 
     -> our logic
@@ -167,7 +189,7 @@ Detail:
 1. @Bean: helloWorldJob (...) 
     -> job that we will launch
 
-#### Task 4. build the application
+### Task 4. build the application code (who will launch your spring batch jobs?)
 
 1. hello.Application 
     -> our main class
@@ -178,7 +200,7 @@ Detail:
 1. call SpringApplication.run(...) 
     -> to load spring context and execute job
 
-#### Task 5. launch the application
+### Task 5. launch the application
 
 1. gradle build
     -> make the executable jar
