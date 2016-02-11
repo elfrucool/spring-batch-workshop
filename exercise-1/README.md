@@ -133,12 +133,12 @@ Detail:
 
 1. In file [gradle.properties][FILE-GRADLE-PROPERTIES]:  configure gradle daemon
 
-    -> to use gradle daemon and make builds faster
-
     ```groovy
     org.gradle.daemon=true
     org.gradle.workers.max=4 
     ```
+
+    [To use gradle daemon and make builds faster](https://docs.gradle.org/current/userguide/gradle_daemon.html)
 
 1. verify if all dependencies are available
 
