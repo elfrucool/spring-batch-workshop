@@ -44,6 +44,21 @@ You need to perform the following 5 tasks:
 ### Let's start
 
 1. set up dependencies ([build.gradle](https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/build.gradle) + [gradle.properties](gradle.properties))
+
+    You only need to follow the next 9 steps:
+
+    1. (build.gradle) -> download a special gradle plugin
+    1. (build.gradle) -> configure jar packaging options
+    1. (build.gradle) -> apply gradle plugins
+    1. (build.gradle) -> configure repositories
+    1. (build.gradle) -> configure java version
+    1. (build.gradle) -> configure project dependencies
+    1. (gradle.properties) -> configure gradle daemon
+    1. verify if all dependencies are available
+    1. import to IDEA
+
+    Detail:
+
     1. **build.gradle:** at the top:
         -> download a special gradle plugin
 
@@ -61,9 +76,8 @@ You need to perform the following 5 tasks:
 
         <strong>Rationale:</strong> spring boot helps to build spring applications quickly, the gradle plugin includes some helpful tasks, see: [https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html)
 
-    1. **build.gradle:** apply plugin: 'java' 
+    1. **build.gradle:** apply gradle plugins: 'java' + 'spring-boot'
         -> for use java
-    1. **build.gradle:** apply plugin: 'spring-boot' 
         -> special gradle tasks for spring-boot
     1. **build.gradle:** jar { ... baseName ... version } 
         -> single big fat jar
@@ -73,7 +87,7 @@ You need to perform the following 5 tasks:
         -> use java8
     1. **build.gradle:** dependencies { ... } 
         -> spring batch + in-memory database + tests
-    1. gradle.properties
+    1. **gradle.properties**
         -> to use gradle daemon and make builds faster
 
         ```groovy
