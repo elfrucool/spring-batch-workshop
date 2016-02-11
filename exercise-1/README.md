@@ -43,20 +43,20 @@ You need to perform the following 5 tasks:
 
 ### Let's start
 
-1. set up dependencies (build.gradle + gradle.properties)
-    1. at the top: buildscript {...}
+1. set up dependencies ([build.gradle](https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/build.gradle) + [gradle.properties](gradle.properties))
+    1. **build.gradle:** at the top: buildscript {...}
         -> download a special gradle plugin
-    1. apply plugin: 'java' 
+    1. **build.gradle:** apply plugin: 'java' 
         -> for use java
-    1. apply plugin: 'spring-boot' 
+    1. **build.gradle:** apply plugin: 'spring-boot' 
         -> special gradle tasks for spring-boot
-    1. jar { ... baseName ... version } 
+    1. **build.gradle:** jar { ... baseName ... version } 
         -> single big fat jar
-    1. repositories { ... } 
+    1. **build.gradle:** repositories { ... } 
         -> tell gradle where to look for dependencies
-    1. source/target compatibility: 1.8 
+    1. **build.gradle:** source/target compatibility: 1.8 
         -> use java8
-    1. dependencies { ... } 
+    1. **build.gradle:** dependencies { ... } 
         -> spring batch + in-memory database + tests
     1. gradle.properties ... 
         -> to use gradle daemon
