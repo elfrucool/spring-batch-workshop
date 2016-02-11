@@ -37,7 +37,6 @@ public class BatchConfiguration {
         return steps.get("helloStep") //
                 .tasklet(helloTasklet) //
                 .build();
-
     }
 
     @Bean

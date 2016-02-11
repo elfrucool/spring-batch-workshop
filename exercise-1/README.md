@@ -256,7 +256,43 @@ Details:
     ```
 
 1. @Bean: helloStep is the step that wraps our logic
+
+    ```java
+    // ... package declaration & imports ...
+    @Configuration
+    @EnableBatchProcessing
+    public class BatchConfiguration {
+        // helloTasklet() {...}
+
+        @Bean
+        public Step helloStep(StepBuilderFactory steps, Tasklet helloTasklet) {
+            return steps.get("helloStep") //
+                    .tasklet(helloTasklet) //
+                    .build();
+        }
+    }
+    ```
+
 1. @Bean: helloWorldJob is the job that executes the step with our logic
+
+    ```java
+    // ... package declaration & imports ...
+    @Configuration
+    @EnableBatchProcessing
+    public class BatchConfiguration {
+        // helloTasklet() {...}
+        // helloStep() {...}
+
+        @Bean
+        public Job helloWorldJob(JobBuilderFactory jobs, Step helloStep) {
+            return jobs.get("helloWorldJob") //
+                    .incrementer(new RunIdIncrementer()) //
+                    .flow(helloStep) //
+                    .end() //
+                    .build();
+        }
+    }
+    ```
 
 ### Task 4. build the application code (who will launch your spring batch jobs?)
 
