@@ -4,7 +4,7 @@ Repositorio de recursos para workshop de spring batch en nearsoft, primer cuarto
 SPRING BATCH WORKSHOP
 =====================
 
-1. [PRACTICE 1: HELLO WORLD](/tree/master/exercise-1/README.md)
+1. [PRACTICE 1: HELLO WORLD](https://github.com/rvazquezglez/spring-batch-workshop/tree/master/exercise-1/README.md)
 
 2. PRACTICE 2: IMPORT ADDRESS LIST TO DATABASE
     ....
