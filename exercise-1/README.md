@@ -123,7 +123,8 @@ Detail:
 
     ```groovy
     dependencies {
-        compile("org.springframework.boot:spring-boot-starter-batch") // this dependency brings all we need: spring batch + in-memory database + tests
+        // this dependency brings all we need: spring batch + in-memory database + tests
+        compile("org.springframework.boot:spring-boot-starter-batch")
         testCompile("junit:junit")
     }
     ```
