@@ -226,12 +226,37 @@ Now we have our spring batch infrastructure complete, it's time to build our job
 
 ### Task 3. build your beans: HelloWorlJob & Friends <-- they will have your program's logic
 
-1. @Bean: helloWorldTasklet (...) 
-    -> our logic
-1. @Bean: helloStep (...) 
-    -> step with our logic
-1. @Bean: helloWorldJob (...) 
-    -> job that we will launch
+We will build three beans from the smallest level of execution to the birdview one:
+
+1. @Bean: helloTasklet contains the core of our custom logic
+1. @Bean: helloStep is the step that wraps our logic
+1. @Bean: helloWorldJob is the job that executes the step with our logic
+
+Details:
+
+1. @Bean: helloTasklet contains the core of our custom logic
+
+    ```java
+    // ... package declaration & imports ...
+    @Configuration
+    @EnableBatchProcessing
+    public class BatchConfiguration {
+        @Bean
+        public Tasklet helloTasklet() {
+            return new Tasklet() {
+                @Override
+                public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+                    System.out.println("=================================================");
+                    System.out.println("HELLO WORLD");
+                    System.out.println("=================================================");
+                    return RepeatStatus.FINISHED;
+                }
+            };
+        }
+    ```
+
+1. @Bean: helloStep is the step that wraps our logic
+1. @Bean: helloWorldJob is the job that executes the step with our logic
 
 ### Task 4. build the application code (who will launch your spring batch jobs?)
 
