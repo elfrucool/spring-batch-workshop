@@ -59,7 +59,7 @@ You need to perform the following 5 tasks:
         }
         ```
 
-        **Rationale: ** spring boot helps to build spring applications quickly, the gradle plugin includes some helpful tasks, see: [https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html)
+        <strong>Rationale:</strong> spring boot helps to build spring applications quickly, the gradle plugin includes some helpful tasks, see: [https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html)
 
     1. **build.gradle:** apply plugin: 'java' 
         -> for use java
