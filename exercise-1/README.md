@@ -48,8 +48,8 @@ You need to perform the following 5 tasks:
     You only need to follow the next 9 steps:
 
     1. (build.gradle) -> download a special gradle plugin
-    1. (build.gradle) -> configure jar packaging options
     1. (build.gradle) -> apply gradle plugins
+    1. (build.gradle) -> configure jar packaging options
     1. (build.gradle) -> configure repositories
     1. (build.gradle) -> configure java version
     1. (build.gradle) -> configure project dependencies
@@ -59,7 +59,7 @@ You need to perform the following 5 tasks:
 
     Detail:
 
-    1. **build.gradle:** at the top:
+    1. (build.gradle) -> download a special gradle plugin
         -> download a special gradle plugin
 
         ```groovy
@@ -76,10 +76,18 @@ You need to perform the following 5 tasks:
 
         <strong>Rationale:</strong> spring boot helps to build spring applications quickly, the gradle plugin includes some helpful tasks, see: [https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html)
 
-    1. **build.gradle:** apply gradle plugins: 'java' + 'spring-boot'
-        -> for use java
-        -> special gradle tasks for spring-boot
-    1. **build.gradle:** jar { ... baseName ... version } 
+    1. (build.gradle) -> apply gradle plugins
+
+        ```groovy
+        apply plugin: 'java' // for use java
+        apply plugin: 'spring-boot' // special gradle tasks for spring-boot
+        ```
+
+        <strong>Rationale:</strong> See _rationale_ above and: [Gradle Plugins](https://docs.gradle.org/current/userguide/plugins.html)
+
+    1. (build.gradle) -> configure jar packaging options
+    
+        { ... baseName ... version } 
         -> single big fat jar
     1. **build.gradle:** repositories { ... } 
         -> tell gradle where to look for dependencies
