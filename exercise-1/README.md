@@ -43,7 +43,7 @@ You need to perform the following 5 tasks:
 
 ### Let's start
 
-1. set up dependencies ([build.gradle](https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/build.gradle) + [gradle.properties](gradle.properties))
+1. set up dependencies ([build.gradle][2] + [gradle.properties][3])
 
     You only need to follow the next 9 steps:
 
@@ -74,7 +74,7 @@ You need to perform the following 5 tasks:
         }
         ```
 
-        <strong>Rationale:</strong> spring boot helps to build spring applications quickly, the gradle plugin includes some helpful tasks, see: [Spring Boot Gradle Plugin][1]
+        <strong>Rationale:</strong> spring boot helps to build spring applications quickly, the gradle plugin includes some helpful tasks, see: [Spring Boot Gradle Plugin][SPRING-BOOT-GRADLE-PLUGIN]
 
     1. (build.gradle) -> apply gradle plugins
 
@@ -83,7 +83,7 @@ You need to perform the following 5 tasks:
         apply plugin: 'spring-boot' // special gradle tasks for spring-boot
         ```
 
-        <strong>Rationale:</strong> See [Spring Boot Gradle Plugin][1] and: [Gradle Plugins](https://docs.gradle.org/current/userguide/plugins.html)
+        <strong>Rationale:</strong> See [About Gradle Plugins](https://docs.gradle.org/current/userguide/plugins.html), [Java Gradle Plugin](https://docs.gradle.org/current/javadoc/org/gradle/api/plugins/JavaPlugin.html) and [Spring Boot Gradle Plugin][SPRING-BOOT-GRADLE-PLUGIN]
 
     1. (build.gradle) -> configure jar packaging options
     
@@ -145,5 +145,6 @@ CONGRATULATIONS!!! now play around
 
 
 <!-- global links -->
-[1]: https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
-
+[SPRING-BOOT-GRADLE-PLUGIN]: https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
+[2]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/build.gradle
+[3]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/gradle.properties
