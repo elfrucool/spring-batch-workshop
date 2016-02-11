@@ -44,7 +44,7 @@ You need to perform the following 5 tasks:
 ### Let's start
 
 1. set up dependencies ([build.gradle](https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/build.gradle) + [gradle.properties](gradle.properties))
-    1. **build.gradle:** at the top: buildscript {...}
+    1. **build.gradle:** at the top:
         -> download a special gradle plugin
 
         ```groovy
@@ -58,6 +58,9 @@ You need to perform the following 5 tasks:
             }
         }
         ```
+
+        **Rationale: ** spring boot helps to build spring applications quickly, the gradle plugin includes some helpful tasks, see: [https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html)
+
     1. **build.gradle:** apply plugin: 'java' 
         -> for use java
     1. **build.gradle:** apply plugin: 'spring-boot' 
