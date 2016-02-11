@@ -173,12 +173,54 @@ Steps in detail:
 
 ### Task 2. configure infrastructure <-- job repo, etc.
 
+Spring Batch projects are based on several beans as explained above, those beans are automatically configured based on annotations in a given class, so we need three tings:
+
+1. a class (hello.BatchConfiguration)
+1. annotated with @Configuration
+1. annotated with @EnableBatchProcessing
+
+Details:
+
 1. create class hello.BatchConfiguration 
-    -> this hill have spring batch configuration
+
+    ```java
+    package hello;
+
+    public class BatchConfiguration {
+    }
+    ```
+
+    <strong>Rationale:</strong> we can use any class for enable spring batch infrastructure, for our example, this class hill have spring batch configuration
+
 1. annotate with @Configuration 
-    -> to convert it to spring bean factory
+
+    ```java
+    package hello;
+
+    import org.springframework.context.annotation.Configuration;
+
+    @Configuration
+    public class BatchConfiguration {
+    }
+    ```
+
+    <strong>Rationale:</strong> classes annotated as [@Configuration](http://docs.spring.io/autorepo/docs/spring/4.1.1.RELEASE/javadoc-api/org/springframework/context/annotation/Configuration.html) are considered bean factories by spring.
+
 1. annotate with @EnableBatchProcessing 
-    -> to make spring batch infrastructure beans available
+
+    ```java
+    package hello;
+
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+
+    @Configuration
+    @EnableBatchProcessing
+    public class BatchConfiguration {
+    }
+    ```
+
+    <strong>Rationale:</strong> to make [spring batch infrastructure beans available](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html)
 
 ### Task 3. build your beans: HelloWorlJob & Friends <-- they will have your program's logic
 
