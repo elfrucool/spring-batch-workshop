@@ -60,6 +60,7 @@ You need to perform the following 5 tasks:
         -> spring batch + in-memory database + tests
     1. gradle.properties
         -> to use gradle daemon and make builds faster
+
         ```groovy
         org.gradle.daemon=true
         org.gradle.workers.max=4 
