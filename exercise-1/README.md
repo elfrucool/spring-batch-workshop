@@ -41,6 +41,8 @@ You need to perform the following 5 tasks:
 1. build the application
 1. launch the application
 
+### Let's start
+
 1. set up dependencies (build.gradle + gradle.properties)
     1. at the top: buildscript {...}
         -> download a special gradle plugin
