@@ -31,7 +31,7 @@ So:
 
 ## ENOUGH SPEAKING, START ACTION:
 
-We will produce the _must have_ practice when learning a new technology: _hello world_ in Spring Batch
+We will produce the classical _hello world_ in Spring Batch
 
 You need to perform the following 5 tasks:
 
