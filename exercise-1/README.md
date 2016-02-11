@@ -38,7 +38,7 @@ We will produce the classical _hello world_ in Spring Batch
 
 You need to perform the following 5 tasks:
 
-1. set up dependencies ([build.gradle][FILE-BUILD-GRADLE] + [gradle.properties][FILE-GRADLE-PROPERTIES])
+1. set up environment ([build.gradle][FILE-BUILD-GRADLE] + [gradle.properties][FILE-GRADLE-PROPERTIES])
 1. configure infrastructure <-- job repo, etc.
 1. build your beans: HelloWorlJob & Friends
 1. build the application
@@ -46,7 +46,7 @@ You need to perform the following 5 tasks:
 
 ### Let's start
 
-#### Task 1. set up dependencies ([build.gradle][FILE-BUILD-GRADLE] + [gradle.properties][FILE-GRADLE-PROPERTIES])
+#### Task 1. set up environment ([build.gradle][FILE-BUILD-GRADLE] + [gradle.properties][FILE-GRADLE-PROPERTIES])
 
 You only need to follow the next 9 steps:
 
