@@ -222,6 +222,8 @@ Details:
 
     <strong>Rationale:</strong> to make [spring batch infrastructure beans available](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html)
 
+Now we have our spring batch infrastructure complete, it's time to build our job with our custom logic
+
 ### Task 3. build your beans: HelloWorlJob & Friends <-- they will have your program's logic
 
 1. @Bean: helloWorldTasklet (...) 
