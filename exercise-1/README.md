@@ -46,6 +46,18 @@ You need to perform the following 5 tasks:
 1. set up dependencies ([build.gradle](https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/build.gradle) + [gradle.properties](gradle.properties))
     1. **build.gradle:** at the top: buildscript {...}
         -> download a special gradle plugin
+
+        ```groovy
+        buildscript {
+            repositories {
+                mavenCentral()
+                mavenLocal()
+            }
+            dependencies {
+                classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.1.RELEASE")
+            }
+        }
+        ```
     1. **build.gradle:** apply plugin: 'java' 
         -> for use java
     1. **build.gradle:** apply plugin: 'spring-boot' 
