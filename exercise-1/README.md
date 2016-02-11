@@ -58,8 +58,12 @@ You need to perform the following 5 tasks:
         -> use java8
     1. **build.gradle:** dependencies { ... } 
         -> spring batch + in-memory database + tests
-    1. gradle.properties ... 
-        -> to use gradle daemon
+    1. gradle.properties
+        -> to use gradle daemon and make builds faster
+        ```groovy
+        org.gradle.daemon=true
+        org.gradle.workers.max=4 
+        ```
     1. execute gradle tasks / gradle dependencies 
         -> to see if everything is ok
     1. import to IDEA
