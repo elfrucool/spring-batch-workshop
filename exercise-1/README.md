@@ -173,7 +173,7 @@ Steps in detail:
 
 ### Task 2. configure infrastructure <-- job repo, etc.
 
-Spring Batch projects are based on several beans as explained above, those beans are automatically configured based on annotations in a given class, so we need three tings:
+Spring Batch projects are based on several beans as explained above, those beans are automatically configured based on annotations in a given class, so we need three things:
 
 1. a class (hello.BatchConfiguration)
 1. annotated with @Configuration
