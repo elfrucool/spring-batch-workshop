@@ -43,23 +43,23 @@ You need to perform the following 5 tasks:
 
 ### Let's start
 
-1. set up dependencies ([build.gradle][2] + [gradle.properties][3])
+1. set up dependencies ([build.gradle][FILE-BUILD-GRADLE] + [gradle.properties][FILE-GRADLE-PROPERTIES])
 
     You only need to follow the next 9 steps:
 
-    1. (build.gradle) -> download a special gradle plugin
-    1. (build.gradle) -> apply gradle plugins
-    1. (build.gradle) -> configure jar packaging options
-    1. (build.gradle) -> configure repositories
-    1. (build.gradle) -> configure java version
-    1. (build.gradle) -> configure project dependencies
-    1. (gradle.properties) -> configure gradle daemon
+    1. In file [build.gradle][FILE-BUILD-GRADLE]:  download a special gradle plugin
+    1. In file [build.gradle][FILE-BUILD-GRADLE]:  apply gradle plugins
+    1. In file [build.gradle][FILE-BUILD-GRADLE]:  configure jar packaging options
+    1. In file [build.gradle][FILE-BUILD-GRADLE]:  configure repositories
+    1. In file [build.gradle][FILE-BUILD-GRADLE]:  configure java version
+    1. In file [build.gradle][FILE-BUILD-GRADLE]:  configure project dependencies
+    1. In file [gradle.properties][FILE-GRADLE-PROPERTIES]:  configure gradle daemon
     1. verify if all dependencies are available
     1. import to IDEA
 
     Detail:
 
-    1. (build.gradle) -> download a special gradle plugin
+    1. In file [build.gradle][FILE-BUILD-GRADLE]:  download a special gradle plugin
         -> download a special gradle plugin
 
         ```groovy
@@ -76,7 +76,7 @@ You need to perform the following 5 tasks:
 
         <strong>Rationale:</strong> spring boot helps to build spring applications quickly, the gradle plugin includes some helpful tasks, see: [Spring Boot Gradle Plugin][SPRING-BOOT-GRADLE-PLUGIN]
 
-    1. (build.gradle) -> apply gradle plugins
+    1. In file [build.gradle][FILE-BUILD-GRADLE]:  apply gradle plugins
 
         ```groovy
         apply plugin: 'java' // for use java
@@ -85,26 +85,42 @@ You need to perform the following 5 tasks:
 
         <strong>Rationale:</strong> See [About Gradle Plugins](https://docs.gradle.org/current/userguide/plugins.html), [Java Gradle Plugin](https://docs.gradle.org/current/javadoc/org/gradle/api/plugins/JavaPlugin.html) and [Spring Boot Gradle Plugin][SPRING-BOOT-GRADLE-PLUGIN]
 
-    1. (build.gradle) -> configure jar packaging options
+    1. In file [build.gradle][FILE-BUILD-GRADLE]:  configure jar packaging options
     
         { ... baseName ... version } 
         -> single big fat jar
-    1. **build.gradle:** repositories { ... } 
+
+    1. In file [build.gradle][FILE-BUILD-GRADLE]:  configure repositories
+    
+        repositories { ... } 
         -> tell gradle where to look for dependencies
-    1. **build.gradle:** source/target compatibility: 1.8 
+
+    1. In file [build.gradle][FILE-BUILD-GRADLE]:  configure java version
+    
+        source/target compatibility: 1.8 
         -> use java8
-    1. **build.gradle:** dependencies { ... } 
+
+    1. In file [build.gradle][FILE-BUILD-GRADLE]:  configure project dependencies
+    
+        dependencies { ... } 
         -> spring batch + in-memory database + tests
-    1. **gradle.properties**
+
+    1. In file [gradle.properties][FILE-GRADLE-PROPERTIES]:  configure gradle daemon
+
         -> to use gradle daemon and make builds faster
 
         ```groovy
         org.gradle.daemon=true
         org.gradle.workers.max=4 
         ```
-    1. execute gradle tasks / gradle dependencies 
+
+    1. verify if all dependencies are available
+    
+        execute gradle tasks / gradle dependencies 
         -> to see if everything is ok
+
     1. import to IDEA
+
         -> guess what ...
 
 1. configure infrastructure <-- job repo, etc.
@@ -145,6 +161,6 @@ CONGRATULATIONS!!! now play around
 
 
 <!-- global links -->
+[FILE-BUILD-GRADLE]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/build.gradle
+[FILE-GRADLE-PROPERTIES]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/gradle.properties
 [SPRING-BOOT-GRADLE-PLUGIN]: https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
-[2]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/build.gradle
-[3]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/gradle.properties
