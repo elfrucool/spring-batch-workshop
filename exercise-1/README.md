@@ -142,8 +142,8 @@ Detail:
 
 1. verify if all dependencies are available
 
-    execute gradle tasks / gradle dependencies 
-    -> to see if everything is ok
+    execute gradle tasks / gradle dependencies to see if everything is ok
+    see output example [here][FILE-TASKS] and [here][FILE-DEPENDENCIES].
 
 1. import to IDEA
 
@@ -193,6 +193,8 @@ CONGRATULATIONS!!! now play around
 <!-- global links -->
 [FILE-BUILD-GRADLE]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/build.gradle
 [FILE-GRADLE-PROPERTIES]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/gradle.properties
+[FILE-TASKS]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/tasks.txt
+[FILE-DEPENDENCIES]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/dependencies.txt
 [SPRING-BOOT-GRADLE-PLUGIN]: https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
 [GRADLE-DEPENDENCIES]: https://docs.gradle.org/current/userguide/artifact_dependencies_tutorial.html
 [GRADLE-JAVA-PLUGIN]: https://docs.gradle.org/current/javadoc/org/gradle/api/plugins/JavaPlugin.html
