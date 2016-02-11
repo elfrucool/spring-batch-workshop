@@ -74,7 +74,7 @@ You need to perform the following 5 tasks:
         }
         ```
 
-        <strong>Rationale:</strong> spring boot helps to build spring applications quickly, the gradle plugin includes some helpful tasks, see: [https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html)
+        <strong>Rationale:</strong> spring boot helps to build spring applications quickly, the gradle plugin includes some helpful tasks, see: [Spring Boot Gradle Plugin][1]
 
     1. (build.gradle) -> apply gradle plugins
 
@@ -83,7 +83,7 @@ You need to perform the following 5 tasks:
         apply plugin: 'spring-boot' // special gradle tasks for spring-boot
         ```
 
-        <strong>Rationale:</strong> See _rationale_ above and: [Gradle Plugins](https://docs.gradle.org/current/userguide/plugins.html)
+        <strong>Rationale:</strong> See [Spring Boot Gradle Plugin][1] and: [Gradle Plugins](https://docs.gradle.org/current/userguide/plugins.html)
 
     1. (build.gradle) -> configure jar packaging options
     
@@ -142,4 +142,8 @@ You need to perform the following 5 tasks:
         -> guess what...
 
 CONGRATULATIONS!!! now play around
+
+
+<!-- global links -->
+[1]: https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
 
