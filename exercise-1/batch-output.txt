@@ -1,0 +1,31 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.3.1.RELEASE)
+
+2016-02-12 02:32:20.739  INFO 27104 --- [           main] hello.Application                        : Starting Application on Gustavos-MacBook-Pro.local with PID 27104 (/Users/gserrano/src/java/spring-batch-workshop/exercise-1/build/libs/my-spring-batch-app-0.1.0.jar started by gserrano in /Users/gserrano/src/java/spring-batch-workshop/exercise-1)
+2016-02-12 02:32:20.742  INFO 27104 --- [           main] hello.Application                        : No active profile set, falling back to default profiles: default
+2016-02-12 02:32:20.780  INFO 27104 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@3263acb: startup date [Fri Feb 12 02:32:20 UTC 2016]; root of context hierarchy
+2016-02-12 02:32:21.305  WARN 27104 --- [           main] o.s.c.a.ConfigurationClassEnhancer       : @Bean method ScopeConfiguration.stepScope is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
+2016-02-12 02:32:21.314  WARN 27104 --- [           main] o.s.c.a.ConfigurationClassEnhancer       : @Bean method ScopeConfiguration.jobScope is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
+2016-02-12 02:32:21.445  INFO 27104 --- [           main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:hsqldb:mem:testdb', username='sa'
+2016-02-12 02:32:21.884  INFO 27104 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executing SQL script from class path resource [org/springframework/batch/core/schema-hsqldb.sql]
+2016-02-12 02:32:21.890  INFO 27104 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executed SQL script from class path resource [org/springframework/batch/core/schema-hsqldb.sql] in 6 ms.
+2016-02-12 02:32:21.953  INFO 27104 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2016-02-12 02:32:21.962  INFO 27104 --- [           main] o.s.b.a.b.JobLauncherCommandLineRunner   : Running default command line with: []
+2016-02-12 02:32:21.967  INFO 27104 --- [           main] o.s.b.c.r.s.JobRepositoryFactoryBean     : No database type set, using meta data indicating: HSQL
+2016-02-12 02:32:22.048  INFO 27104 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2016-02-12 02:32:22.085  INFO 27104 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] launched with the following parameters: [{run.id=1}]
+2016-02-12 02:32:22.096  INFO 27104 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [helloStep]
+=================================================
+HELLO WORLD
+=================================================
+2016-02-12 02:32:22.109  INFO 27104 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] completed with the following parameters: [{run.id=1}] and the following status: [COMPLETED]
+2016-02-12 02:32:22.111  INFO 27104 --- [           main] hello.Application                        : Started Application in 1.589 seconds (JVM running for 1.925)
+2016-02-12 02:32:22.122  INFO 27104 --- [       Thread-2] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@3263acb: startup date [Fri Feb 12 02:32:20 UTC 2016]; root of context hierarchy
+2016-02-12 02:32:22.124  INFO 27104 --- [       Thread-2] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2016-02-12 02:32:22.125  INFO 27104 --- [       Thread-2] o.s.j.d.e.EmbeddedDatabaseFactory        : Shutting down embedded database: url='jdbc:hsqldb:mem:testdb'
