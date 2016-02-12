@@ -1,2 +1,1 @@
-include "exercise-1"
-include "exercise-2"
+include 'exercise-1', 'exercise-2'
