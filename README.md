@@ -6,9 +6,7 @@ SPRING BATCH WORKSHOP
 
 1. [PRACTICE 1: HELLO WORLD](https://github.com/rvazquezglez/spring-batch-workshop/tree/master/exercise-1/README.md)
 
-2. PRACTICE 2: IMPORT ADDRESS LIST TO DATABASE
-    ....
-    x -> export ....
+2. [PRACTICE 2: IMPORT ADDRESS LIST TO DATABASE](https://github.com/rvazquezglez/spring-batch-workshop/tree/master/exercise-2/README.md)
 
 3. PRACTICE 3: INTEGRATE WITH MY EXISTING APPLICATION
 

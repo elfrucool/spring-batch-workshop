@@ -1,0 +1,114 @@
+#PRACTICE 2: IMPORT ADDRESS LIST TO DATABASE
+
+Given a csv file which represents a contacts list (name, email and phone), we will create a job _ImportAddressListJob_ 
+to import all contacts to a relational database.
+
+To do it, we will go through X tasks that are the following:
+
+1. Set up build environment
+1. Set up spring batch infrastructure and application
+1. Set up database environment
+1. Set up import environment
+1. Define job
+1. Define step
+1. Define the [ItemReader][BATCH-ITEM-READER]
+1. Define the [ItemProcessor][BATCH-ITEM-PROCESSOR]
+1. Define the [ItemWriter][BATCH-ITEM-WRITER]
+
+In spring batch, each job is a sequence of steps (see: [Configuring and Running a Job](https://docs.spring.io/spring-batch/reference/html/configureJob.html)); steps come in two flavours: tasklet oriented and chunk oriented (see: [Configuring Step](https://docs.spring.io/spring-batch/reference/html/configureStep.html)).
+
+In this practice we will create a job _ImportAddressListJob_ with a single step _ImportAddressListStep_ that is a chunk-oriented one. We will create an [ItemReader][BATCH-ITEM-READER], an [ItemProcessor][BATCH-ITEM-PROCESSOR] and an [ItemWriter][BATCH-ITEM-WRITER] to do the job of importing a CSV file to a database.
+
+## TASK 1: SET UP BUILD ENVIRONMENT
+
+Since we already practiced this in [exercise 1][EXERCISE-1], you only need to follow two quick steps:
+
+1. Create the gradle files using the content provided in the links
+1. Create the directories used by gradle
+
+Details:
+
+1. Create the gradle files using the content provided in the links (both in the root of exercise-2 project)
+
+    1. [build.gradle][FILE-BUILD-GRADLE]: this is slightly different from the [exercise 1][EXERCISE-1] since we are also importing database dependencies
+    1. [gradle.properties][FILE-GRADLE-PROPERTIES]: this is the same as in [exercise 1][EXERCISE-1]
+    
+1. Create the directories used by gradle
+
+    If you are in a bash terminal, you can create all of them with the following command:
+
+    ```sh
+    shell$ mkdir -pv src/{main,test}/{java/resources}
+    ```
+
+    The following directories must exist:
+
+    ```
+    src/main/java
+    src/main/resources
+    src/test/java
+    src/test/resources
+    ```
+    
+##TASK 2: SET UP SPRING BATCH INFRASTRUCTURE AND APPLICATION
+
+We will quickly create the necessary classes to have both, our application and spring batch infrastructure beans.
+
+So, you need to follow two steps: (see [exercise 1][EXERCISE-1] if you want more context)
+
+1. Create the application main entry point
+1. Create spring batch infrastructure
+
+Details:
+
+1. Create the application main entry point
+
+    Just create a class named `Applicatin` in `src/main/java/importaddresslist` with the following contents:
+    
+    ```java
+    package importaddresslist;
+
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+    @SpringBootApplication
+    public class Application {
+        public static void main(String... args) {
+            SpringApplication.run(Application.class, args);
+        }
+    }
+    ```
+
+1. Create spring batch infrastructure
+
+    Just create a class named `BatchConfiguration` in `src/main/java/importaddresslist` with the following contents:
+        
+    ```java
+    package importaddresslist;
+
+    import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+    import org.springframework.context.annotation.Configuration;
+
+    @Configuration
+    @EnableBatchProcessing
+    public class BatchConfiguration {
+    }
+    ```
+
+##TASK 3: SET UP DATABASE ENVIRONMENT
+##TASK 4: SET UP IMPORT ENVIRONMENT
+##TASK 5: DEFINE JOB
+##TASK 6: DEFINE STEP
+##TASK 7: DEFINE THE [ItemReader][BATCH-ITEM-READER]
+##TASK 8: DEFINE THE [ItemProcessor][BATCH-ITEM-PROCESSOR]
+##TASK 9: DEFINE THE [ItemWriter][BATCH-ITEM-WRITER]
+
+<!-- global links -->
+
+[FILE-BUILD-GRADLE]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-2/build.gradle
+[FILE-GRADLE-PROPERTIES]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-2/gradle.properties
+<!--[FILE-BATCH-INFRASTRUCTURE]: -->
+[BATCH-ITEM-READER]: https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/ItemReader.html
+[BATCH-ITEM-PROCESSOR]: https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/ItemProcessor.html
+[BATCH-ITEM-WRITER]: https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/ItemWriter.html
+[EXERCISE-1]: https://github.com/rvazquezglez/spring-batch-workshop/tree/master/exercise-1/README.md
