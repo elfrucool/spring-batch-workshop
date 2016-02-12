@@ -257,7 +257,7 @@ Details:
 
     <strong>Rationale:</strong> Batch steps come in two flavours: [tasklet][TASKLET-JAVADOC] oriented and [chunk](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/step/item/ChunkOrientedTasklet.html) oriented (a tasklet that uses an [ItemReader](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/ItemReader.html), an [ItemProcessor](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/ItemProcessor.html) and an [ItemWriter](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/ItemWriter.html) to process chunks of data in a single transaction, we will see more in next exercises, for the impatients: see [Configuring Step](https://docs.spring.io/spring-batch/reference/html/configureStep.html))
 
-    For this example we will use tasklet oriented step, see the following four links for further reference:
+    For this example we used tasklet oriented step, see the following four links for further reference:
 
     1. [Tasklet][TASKLET-JAVADOC]
     1. [StepContribution](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/StepContribution.html)
