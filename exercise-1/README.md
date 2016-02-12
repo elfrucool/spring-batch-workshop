@@ -298,14 +298,18 @@ Details:
         public Job helloWorldJob(JobBuilderFactory jobs, Step helloStep) {
             return jobs.get("helloWorldJob") //
                     .incrementer(new RunIdIncrementer()) //
-                    .flow(helloStep) //
-                    .end() //
+                    .start(helloStep) //
                     .build();
         }
     }
     ```
 
     <strong>Rationale:</strong> We are creating a job (named "helloWorldJob") with a single step (helloStep), we are using an [already-configured][ENABLE-BATCH-PROCESSING] bean: [JobBuilderFactory](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/configuration/annotation/JobBuilderFactory.html) to create the job #theEasyWay.
+
+    Two important details to consider, we will practice them in future activities:
+
+    1. We are setting a [RunIdIncrementer](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/launch/support/RunIdIncrementer.html), more info: [Configuring and Running a Job](https://docs.spring.io/spring-batch/reference/html/configureJob.html)
+    1. A job is built as a sequence of steps, hence the method _start_ which means: _this job starts whith step 'helloStep'_
 
 ### Task 4. build the application code (who will launch your spring batch jobs?)
 

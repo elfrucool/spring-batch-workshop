@@ -43,8 +43,7 @@ public class BatchConfiguration {
     public Job helloWorldJob(JobBuilderFactory jobs, Step helloStep) {
         return jobs.get("helloWorldJob") //
                 .incrementer(new RunIdIncrementer()) //
-                .flow(helloStep) //
-                .end() //
+                .start(helloStep)
                 .build();
     }
 }
