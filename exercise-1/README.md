@@ -313,14 +313,72 @@ Details:
 
 ### Task 4. build the application code (who will launch your spring batch jobs?)
 
-1. hello.Application 
-    -> our main class
-1. annotate with @SpringBootApplicatin 
-    -> to make it able to run spring batch projects
-1. add main method 
-    -> to be executed
-1. call SpringApplication.run(...) 
-    -> to load spring context and execute job
+There are many ways to start a batch job, we will use a very simple one taking advantage of spring boot, we need to follow the next four steps:
+
+1. Create a main class (hello.Application)
+1. annotate with @SpringBootApplication
+1. add main method
+1. call SpringApplication.run(...) inside `main()` method
+
+Details:
+
+1. Create a main class (hello.Application)
+
+    ```java
+    package hello;
+
+    public class Application {
+    }
+    ```
+
+    <strong>Rationale:</strong> Any class can be used, se are using hello.Application
+1. annotate with @SpringBootApplication 
+
+    ```java
+    package hello;
+
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+    @SpringBootApplication
+    public class Application {
+    }
+    ```
+
+    <strong>Rationale:</strong> We are using [@SpringBootApplication](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-using-springbootapplication-annotation.html) to load spring context easyly.
+
+1. add main method
+
+    ```java
+    package hello;
+
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+    @SpringBootApplication
+    public class Application {
+        public static void main(String... args) {
+        }
+    }
+    ```
+
+    <strong>Rationale:</strong> We will launch the program as standalone application.
+
+1. call SpringApplication.run(...) inside `main()` method
+
+    ```java
+    package hello;
+
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+    @SpringBootApplication
+    public class Application {
+        public static void main(String... args) {
+            SpringApplication.run(Application.class, args);
+        }
+    }
+    ```
+
+    <strong>Rationale:</strong> This will load the spring context and execute job. See: [SpringApplication](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-spring-application.html)
 
 ### Task 5. launch the application
 
