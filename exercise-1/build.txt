@@ -1,0 +1,17 @@
+:compileJava
+:processResources
+:classes
+:findMainClass
+:jar
+:bootRepackage
+:assemble
+:compileTestJava UP-TO-DATE
+:processTestResources
+:testClasses
+:test UP-TO-DATE
+:check UP-TO-DATE
+:build
+
+BUILD SUCCESSFUL
+
+Total time: 1.022 secs
