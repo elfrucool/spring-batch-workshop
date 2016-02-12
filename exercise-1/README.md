@@ -48,7 +48,7 @@ You need to perform the following 5 tasks:
 
 So let's start
 
-### Task 1. set up environment ([build.gradle][FILE-BUILD-GRADLE] + [gradle.properties][FILE-GRADLE-PROPERTIES]
+### Task 1. set up environment ([build.gradle][FILE-BUILD-GRADLE] + [gradle.properties][FILE-GRADLE-PROPERTIES])
 
 We will set up a gradle project w/spring batch and import it to IntellijIDEA (or your favourite IDE). The two main files ([build.gradle][FILE-BUILD-GRADLE] and [gradle.properties][FILE-GRADLE-PROPERTIES]) have already all the necessary things, but it is worth for you if you try to write them from scratch.
 
