@@ -382,12 +382,34 @@ Details:
 
 ### Task 5. launch the application
 
-1. gradle build
-    -> make the executable jar
-1. look for jar build/libs/my-spring-batch-app-0.1.0.jar
-    -> to see if it was built
-1. execute java -jar build/libs/my-spring-batch-app-0.1.0.jar
-    -> guess what...
+We will perform three actions to see the application run:
+
+1. make the big fat executable jar file: `shell$ gradle build`
+1. look for jar `build/libs/my-spring-batch-app-0.1.0.jar`
+1. execute `shell$ java -jar build/libs/my-spring-batch-app-0.1.0.jar`
+
+
+1. make the big fat executable jar file: `shell$ gradle build`
+
+    Look for any error, ask the instructor, the output should be like this: [build.txt][FILE-BUILD]
+
+1. look for jar `build/libs/my-spring-batch-app-0.1.0.jar`
+    
+    Issue: `shell$ ls -l build/libs/`
+
+    You should see something like the following:
+
+    ```
+    shell$ ls build/libs/my-spring-batch-app-0.1.0.jar -l
+    -rw-r--r-- 1 user staff 10153647 Feb 12 02:23 build/libs/my-spring-batch-app-0.1.0.jar
+    -rw-r--r-- 1 user staff     2809 Feb 12 02:29 my-spring-batch-app-0.1.0.jar.original
+    ```
+
+1. execute `shell$ java -jar build/libs/my-spring-batch-app-0.1.0.jar`
+    
+    You should see an output like the following: [batch-output.txt][FILE-BATCH-OUTPUT]
+
+    Take your time to understand the log, look where is your code starting, where is the step/job starting/finishing, what other information do you have at hand (time, status, etc).
 
 CONGRATULATIONS!!! now play around
 
@@ -402,3 +424,5 @@ CONGRATULATIONS!!! now play around
 [GRADLE-JAVA-PLUGIN]: https://docs.gradle.org/current/javadoc/org/gradle/api/plugins/JavaPlugin.html
 [TASKLET-JAVADOC]: https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html
 [ENABLE-BATCH-PROCESSING]: https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html
+[FILE-BUILD]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/build.txt
+[FILE-BATCH-OUTPUT]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/exercise-1/batch-output.txt
