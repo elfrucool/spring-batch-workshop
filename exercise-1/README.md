@@ -388,6 +388,7 @@ We will perform three actions to see the application run:
 1. look for jar `build/libs/my-spring-batch-app-0.1.0.jar`
 1. execute `shell$ java -jar build/libs/my-spring-batch-app-0.1.0.jar`
 
+Details:
 
 1. make the big fat executable jar file: `shell$ gradle build`
 
