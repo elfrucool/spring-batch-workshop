@@ -19,7 +19,7 @@ So:
     http://docs.spring.io/spring-batch/trunk/reference/html/images/spring-batch-layers.png
 1. jobs/steps/tasklets/chunks
     - http://image.slidesharecdn.com/con2818-javaee7batchprocessingintherealworld-141001120216-phpapp02/95/java-ee-7-batch-processing-in-the-real-world-11-638.jpg?cb=1412165041
-    - http://cdn.infoq.com/statics\_s1\_20151224-0209/resource/news/2013/06/ee7-spring-batch/en/resources/jsr-352.jpg
+    - http://cdn.infoq.com/statics_s1_20151224-0209/resource/news/2013/06/ee7-spring-batch/en/resources/jsr-352.jpg
 
 ### why spring batch?
 
