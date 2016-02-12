@@ -282,7 +282,7 @@ Details:
     }
     ```
 
-    <strong>Rationale:</strong> We are creating a step with name "helloStep", it will execute the helloTasklet. We use an [already-configured][ENABLE-BATCH-PROCESSING]: [StepBuilderFactory](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/configuration/annotation/StepBuilderFactory.html) object to create the step #theEasyWay.
+    <strong>Rationale:</strong> We are creating a step with name "helloStep", it will execute the helloTasklet. We use an [already-configured][ENABLE-BATCH-PROCESSING] bean: [StepBuilderFactory](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/configuration/annotation/StepBuilderFactory.html)  to create the step #theEasyWay.
 
 1. @Bean: helloWorldJob is the job that executes the step with our logic
 
@@ -305,7 +305,7 @@ Details:
     }
     ```
 
-    <strong>Rationale:</strong> We are creating a job (named "helloWorldJob") with a single step (helloStep), we are using an [already-configured][ENABLE-BATCH-PROCESSING]: [JobBuilderFactory](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/configuration/annotation/JobBuilderFactory.html) object to create the job #theEasyWay.
+    <strong>Rationale:</strong> We are creating a job (named "helloWorldJob") with a single step (helloStep), we are using an [already-configured][ENABLE-BATCH-PROCESSING] bean: [JobBuilderFactory](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/configuration/annotation/JobBuilderFactory.html) to create the job #theEasyWay.
 
 ### Task 4. build the application code (who will launch your spring batch jobs?)
 
