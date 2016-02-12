@@ -255,6 +255,15 @@ Details:
         }
     ```
 
+    <strong>Rationale:</strong> Batch steps come in two flavours: [tasklet][TASKLET-JAVADOC] oriented and [chunk](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/step/item/ChunkOrientedTasklet.html) oriented (a tasklet that uses an [ItemReader](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/ItemReader.html), an [ItemProcessor](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/ItemProcessor.html) and [ItemWriter](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/ItemWriter.html) to process chunks of data in a single transaction, we will see more in next exercises, for the impatients: see [Configuring Step](https://docs.spring.io/spring-batch/reference/html/configureStep.html))
+
+    For this example we will use tasklet oriented step, see the following four links for further reference:
+
+    1. [Tasklet][TASKLET-JAVADOC]
+    1. [StepContribution](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/StepContribution.html)
+    1. [ChunkContext](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/scope/context/ChunkContext.html)
+    1. [RepeatStatus](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/repeat/RepeatStatus.html)
+
 1. @Bean: helloStep is the step that wraps our logic
 
     ```java
@@ -272,6 +281,8 @@ Details:
         }
     }
     ```
+
+    <strong>Rationale:</strong> 
 
 1. @Bean: helloWorldJob is the job that executes the step with our logic
 
@@ -293,6 +304,8 @@ Details:
         }
     }
     ```
+
+    <strong>Rationale:</strong> 
 
 ### Task 4. build the application code (who will launch your spring batch jobs?)
 
@@ -325,3 +338,4 @@ CONGRATULATIONS!!! now play around
 [SPRING-BOOT-GRADLE-PLUGIN]: https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html
 [GRADLE-DEPENDENCIES]: https://docs.gradle.org/current/userguide/artifact_dependencies_tutorial.html
 [GRADLE-JAVA-PLUGIN]: https://docs.gradle.org/current/javadoc/org/gradle/api/plugins/JavaPlugin.html
+[TASKLET-JAVADOC]: https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html
