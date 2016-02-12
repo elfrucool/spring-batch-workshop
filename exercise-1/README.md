@@ -220,7 +220,7 @@ Details:
     }
     ```
 
-    <strong>Rationale:</strong> to make [spring batch infrastructure beans available](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html)
+    <strong>Rationale:</strong> to make [spring batch infrastructure beans available][ENABLE-BATCH-PROCESSING]
 
 Now we have our spring batch infrastructure complete, it's time to build our job with our custom logic
 
@@ -282,7 +282,7 @@ Details:
     }
     ```
 
-    <strong>Rationale:</strong> 
+    <strong>Rationale:</strong> We are creating a step with name "helloStep", it will execute the helloTasklet. We use an [already-configured][ENABLE-BATCH-PROCESSING]: [StepBuilderFactory](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/configuration/annotation/StepBuilderFactory.html) object to create the step #theEasyWay.
 
 1. @Bean: helloWorldJob is the job that executes the step with our logic
 
@@ -305,7 +305,7 @@ Details:
     }
     ```
 
-    <strong>Rationale:</strong> 
+    <strong>Rationale:</strong> We are creating a job (named "helloWorldJob") with a single step (helloStep), we are using an [already-configured][ENABLE-BATCH-PROCESSING]: [JobBuilderFactory](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/configuration/annotation/JobBuilderFactory.html) object to create the job #theEasyWay.
 
 ### Task 4. build the application code (who will launch your spring batch jobs?)
 
@@ -339,3 +339,4 @@ CONGRATULATIONS!!! now play around
 [GRADLE-DEPENDENCIES]: https://docs.gradle.org/current/userguide/artifact_dependencies_tutorial.html
 [GRADLE-JAVA-PLUGIN]: https://docs.gradle.org/current/javadoc/org/gradle/api/plugins/JavaPlugin.html
 [TASKLET-JAVADOC]: https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html
+[ENABLE-BATCH-PROCESSING]: https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html
