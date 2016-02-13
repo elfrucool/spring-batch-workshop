@@ -19,7 +19,7 @@ To do it, we will go through 11 tasks that are the following:
 
 In spring batch, each job is a sequence of steps (see: [Configuring and Running a Job](https://docs.spring.io/spring-batch/reference/html/configureJob.html)); steps come in two flavours: tasklet oriented and chunk oriented (see: [Configuring Step](https://docs.spring.io/spring-batch/reference/html/configureStep.html)).
 
-In this practice we will create a job _ImportAddressListJob_ with a two steps: _ImportAddressListStep_ that is a chunk-oriented one and _VerifyStep_ which is a tasklet step (it will be used to verify that everything went well). We will create an [ItemReader][BATCH-ITEM-READER], an [ItemProcessor][BATCH-ITEM-PROCESSOR] and an [ItemWriter][BATCH-ITEM-WRITER] to do the job of importing a CSV file to a database.
+In this practice we will create a job _ImportAddressListJob_ with two steps: _ImportAddressListStep_ that is a chunk-oriented one and _VerifyStep_ which is a tasklet step (it will be used to verify that everything went well). We will create an [ItemReader][BATCH-ITEM-READER], an [ItemProcessor][BATCH-ITEM-PROCESSOR] and an [ItemWriter][BATCH-ITEM-WRITER] to do the job of importing a CSV file to a database.
 
 ## TASK 1: SET UP BUILD ENVIRONMENT
 
