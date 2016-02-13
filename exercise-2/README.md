@@ -3,21 +3,23 @@
 Given a csv file which represents a contacts list (name, email and phone), we will create a job _ImportAddressListJob_ 
 to import all contacts to a relational database.
 
-To do it, we will go through X tasks that are the following:
+To do it, we will go through 11 tasks that are the following:
 
 1. Set up build environment
 1. Set up spring batch infrastructure and application
 1. Set up database environment
 1. Set up import environment
 1. Define job
-1. Define step
+1. Define import step
 1. Define the [ItemReader][BATCH-ITEM-READER]
 1. Define the [ItemProcessor][BATCH-ITEM-PROCESSOR]
 1. Define the [ItemWriter][BATCH-ITEM-WRITER]
+1. Define verify step
+1. Build, run & enjoy
 
 In spring batch, each job is a sequence of steps (see: [Configuring and Running a Job](https://docs.spring.io/spring-batch/reference/html/configureJob.html)); steps come in two flavours: tasklet oriented and chunk oriented (see: [Configuring Step](https://docs.spring.io/spring-batch/reference/html/configureStep.html)).
 
-In this practice we will create a job _ImportAddressListJob_ with a single step _ImportAddressListStep_ that is a chunk-oriented one. We will create an [ItemReader][BATCH-ITEM-READER], an [ItemProcessor][BATCH-ITEM-PROCESSOR] and an [ItemWriter][BATCH-ITEM-WRITER] to do the job of importing a CSV file to a database.
+In this practice we will create a job _ImportAddressListJob_ with a two steps: _ImportAddressListStep_ that is a chunk-oriented one and _VerifyStep_ which is a tasklet step (it will be used to verify that everything went well). We will create an [ItemReader][BATCH-ITEM-READER], an [ItemProcessor][BATCH-ITEM-PROCESSOR] and an [ItemWriter][BATCH-ITEM-WRITER] to do the job of importing a CSV file to a database.
 
 ## TASK 1: SET UP BUILD ENVIRONMENT
 
@@ -98,10 +100,12 @@ Details:
 ##TASK 3: SET UP DATABASE ENVIRONMENT
 ##TASK 4: SET UP IMPORT ENVIRONMENT
 ##TASK 5: DEFINE JOB
-##TASK 6: DEFINE STEP
+##TASK 6: DEFINE IMPORT STEP
 ##TASK 7: DEFINE THE [ItemReader][BATCH-ITEM-READER]
 ##TASK 8: DEFINE THE [ItemProcessor][BATCH-ITEM-PROCESSOR]
 ##TASK 9: DEFINE THE [ItemWriter][BATCH-ITEM-WRITER]
+##TASK 10: DEFINE VERIFY STEP
+##TASK 11: BUILD, RUN & ENJOY
 
 <!-- global links -->
 
