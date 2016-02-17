@@ -35,6 +35,8 @@ Details:
     1. [build.gradle][FILE-BUILD-GRADLE]: this is slightly different from the [exercise 1][EXERCISE-1] since we are also importing database dependencies
     1. [gradle.properties][FILE-GRADLE-PROPERTIES]: this is the same as in [exercise 1][EXERCISE-1]
     
+    <strong>Remarks: </strong> By adding a database dependency, spring boot will create a pre-configured datasource spring bean, for the case of HSQLDB (among others), the database will reside in memory and it won't have a password. See more: [Spring Boot Database Initialization][SPRING-BOOT-DATABASE-INITIALIZATION].
+    
 1. Create the directories used by gradle
 
     If you are in a bash terminal, you can create all of them with the following command:
