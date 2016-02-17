@@ -115,6 +115,18 @@ CREATE TABLE contacts (
 <strong>Rationale: </strong> Spring boot will do the following two tasks for you: a) It will create a DataSource bean in spring, b) It will execute your script in your configured database. See more: [Spring Boot Database Initialization][SPRING-BOOT-DATABASE-INITIALIZATION]
 
 ##TASK 4: SET UP IMPORT ENVIRONMENT
+
+You need to define where will the input fille be processed, and also we need the file itself, for this exercise, we will use the classpath, although in production environments, either fixed absolute paths are best or based on configurations/parameters.
+
+Create a file named `contacts.csv` at `src/main/resources/` with the following contents:
+
+```csv
+name,email,phone
+my name 1,name1@email.com,111-111-1111
+my name 2,name2@email.com,222-222-2222
+my name 3,name3@email.com,333,333,3333
+```
+
 ##TASK 5: DEFINE JOB
 ##TASK 6: DEFINE IMPORT STEP
 ##TASK 7: DEFINE THE [ItemReader][BATCH-ITEM-READER]
