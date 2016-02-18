@@ -415,7 +415,7 @@ Try to do the following four things:
 
 1. Use `contacts-big.csv` file and see the results.
 1. Add an additional column `birth_date` to both the csv file and the database, and import/dump it
-1. Add a logic in ItemProcessor: when name is 'bob' then return null (this will filter out that row)
+1. Add a logic in ItemProcessor: when name is 'Echo' then return null (this will filter out that row)
 1. Change the _VerifyImportStep_ to use: reader/processor/writer instead of single monolytic tasklet (you may need to rename some function/beans to differentiate readers/processors/writers for each step.
 
 <!-- global links -->
