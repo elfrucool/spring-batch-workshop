@@ -3,12 +3,13 @@
 Given a csv file which represents a contacts list (name, email and phone), we will create a job _ImportAddressListJob_ 
 to import all contacts to a relational database.
 
-To do it, we will go through 11 tasks that are the following:
+To do it, we will go through 12 tasks that are the following:
 
 1. Set up build environment
 1. Set up spring batch infrastructure and application
 1. Set up database environment
 1. Set up import environment
+1. Create `Contact` object
 1. Define job
 1. Define import step
 1. Define the [ItemReader][BATCH-ITEM-READER]
@@ -127,7 +128,24 @@ my name 2,name2@email.com,222-222-2222
 my name 3,name3@email.com,333,333,3333
 ```
 
-##TASK 5: DEFINE JOB
+##TASK 5: CREATE `Contact` OBJECT
+
+You will use a POJO to store per-row information about the contacts to import to database:
+
+```java
+package importaddresslist;
+
+public class Contact {
+    private String name;
+    private String email;
+    private String phone;
+
+    // getters & setters & toString/equals/hashCode
+}
+
+```
+
+##TASK 6: DEFINE JOB
 
 As in [Exercise 1][EXERCISE-1], just create a method to define the job bean inside `importaddresslist.BatchConfiguration` class:
 
@@ -147,12 +165,41 @@ public class BatchConfiguration {
 }
 ```
 
-##TASK 6: DEFINE IMPORT STEP
-##TASK 7: DEFINE THE [ItemReader][BATCH-ITEM-READER]
-##TASK 8: DEFINE THE [ItemProcessor][BATCH-ITEM-PROCESSOR]
-##TASK 9: DEFINE THE [ItemWriter][BATCH-ITEM-WRITER]
-##TASK 10: DEFINE VERIFY STEP
-##TASK 11: BUILD, RUN & ENJOY
+##TASK 7: DEFINE IMPORT STEP
+
+```java
+// package declaration
+// several imports
+
+@Configuration
+@EnableBatchProcessing
+public class BatchConfiguration {
+
+    // helloWorldJob() {...}
+
+    @Bean
+    public Step importAddressListStep(
+            StepBuilderFactory steps,
+            ItemReader<Contact> reader,
+            ItemProcessor<Contact, Contact> processor,
+            ItemWriter<Contact> writer) //
+    {
+        return steps.get("ImportAddressListStep") //
+                .chunk(10) // process items in groups of 10
+                .reader(reader)
+                .processor(processor)
+                .writer(writer)
+                .build();
+    }
+    
+}
+```
+
+##TASK 8: DEFINE THE [ItemReader][BATCH-ITEM-READER]
+##TASK 9: DEFINE THE [ItemProcessor][BATCH-ITEM-PROCESSOR]
+##TASK 10: DEFINE THE [ItemWriter][BATCH-ITEM-WRITER]
+##TASK 11: DEFINE VERIFY STEP
+##TASK 12: BUILD, RUN & ENJOY
 
 <!-- global links -->
 
