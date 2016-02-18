@@ -198,6 +198,46 @@ public class BatchConfiguration {
 ```
 
 ##TASK 8: DEFINE THE [ItemReader][BATCH-ITEM-READER]
+
+Create a method to instantiate the reader:
+
+```java
+// package declaration
+// several imports
+
+@Configuration
+@EnableBatchProcessing
+public class BatchConfiguration {
+
+    // helloWorldJob() {...}
+
+    // importAddressListStep() {...}
+
+    @Bean
+    public ItemReader<Contact> reader() {
+        FlatFileItemReader<Contact> reader = new FlatFileItemReader<>();
+        
+        reader.setResource(new ClassPathResource("contacts.csv"));
+        reader.setLinesToSkip(1); // we will skip column names row
+        
+        reader.setLineMapper(new DefaultLineMapper<Contact>() {{
+            setLineTokenizer(new DelimitedLineTokenizer() {{
+                setNames(new String[]{"name", "email", "phone"});
+            }});
+            
+            setFieldSetMapper(new BeanWrapperFieldSetMapper<Contact>(){{
+                setTargetType(Contact.class);
+            }});
+        }});
+        
+        return reader;
+    }
+
+}
+```
+
+<strong>Rationale:</strong> Here are many things that need an explanation, although the names & javadoc are an excellent source of understanding.
+
 ##TASK 9: DEFINE THE [ItemProcessor][BATCH-ITEM-PROCESSOR]
 ##TASK 10: DEFINE THE [ItemWriter][BATCH-ITEM-WRITER]
 ##TASK 11: DEFINE VERIFY STEP
