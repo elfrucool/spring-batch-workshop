@@ -127,7 +127,7 @@ Create a file named `contacts.csv` at `src/main/resources/` with the following c
 name,email,phone
 my name 1,name1@email.com,111-111-1111
 my name 2,name2@email.com,222-222-2222
-my name 3,name3@email.com,333,333,3333
+my name 3,name3@email.com,333-333-3333
 ```
 
 ##TASK 5: CREATE `Contact` OBJECT
@@ -307,6 +307,65 @@ public class BatchConfiguration {
 <strong>Remarks: </strong> It is worth to check javadoc for each created class. Also, spring boot will automatically create a bean `dataSource` and autowire whenever it is required. See: [Spring Boot Database Initialization][SPRING-BOOT-DATABASE-INITIALIZATION]
 
 ##TASK 11: DEFINE VERIFY STEP
+
+The final step of the job will add a step (_VerifyImportStep_) to verify that the content was correctly imported through executing a SQL query and dump the results.
+ 
+You need to follow the next 3 steps:
+
+1. Update job definition with the new expected step
+1. Create the new step
+1. Qualify steps to allow spring differentiate them
+
+### Details:
+
+1. Update job definition with the new expected step
+
+    ```java
+    // package declaration
+    // several imports
+    
+    @Configuration
+    @EnableBatchProcessing
+    public class BatchConfiguration {
+    
+        @Bean
+        public Job helloWorldJob(JobBuilderFactory jobs, Step importAddressListStep, Step verifyImportStep) {
+            return jobs.get("ImportAddressListJob") //
+                    .incrementer(new RunIdIncrementer()) //
+                    .start(importAddressListStep) //
+                    .next(verifyImportStep) //
+                    .build();
+        }
+    
+        // importAddressListStep() {...}
+    
+        // reader() {...}
+        
+        // processor() {...}
+        
+        // writer() {...}
+    
+    }
+    ```
+    
+    We are introducing two changes to `helloWorldJob` method:
+    
+    1. We are adding a new `verifyImportStep` parameter
+    1. We are adding that step as `next` step
+    
+1. Create the new step
+
+    ```java
+    ```
+    
+    <strong>Remarks:</strong> This step is mainly based on: spring boot's [Accessing Relational Data using JDBC with Spring](https://spring.io/guides/gs/relational-data-access/).
+
+
+1. Qualify steps to allow spring differentiate them
+
+    ```java
+    ```
+
 ##TASK 12: BUILD, RUN & ENJOY
 
 <!-- global links -->

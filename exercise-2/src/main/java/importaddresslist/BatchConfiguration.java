@@ -15,15 +15,24 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @EnableBatchProcessing
 public class BatchConfiguration {
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
     @Bean
     public ItemReader<Contact> reader() {
         FlatFileItemReader<Contact> reader = new FlatFileItemReader<>();
@@ -63,7 +72,7 @@ public class BatchConfiguration {
         return writer;
     }
 
-    @Bean
+    @Bean(name = "importAddressListStep")
     public Step importAddressListStep(
             StepBuilderFactory steps,
             ItemReader<Contact> reader,
@@ -78,12 +87,37 @@ public class BatchConfiguration {
                 .build();
     }
 
+    @Bean(name = "verifyImportStep")
+    public Step verifyImportStep(StepBuilderFactory steps, JdbcTemplate jdbcTemplate) {
+        return steps //
+                .get("VerifyImportStep") //
+                .tasklet((contribution, chunkContext) -> {
+                    jdbcTemplate.query(
+                            "SELECT name,email,phone FROM contacts",
+
+                            (rs, rowNum) ->
+                                new HashMap<String, String>() {{
+                                    put("name", rs.getString("name"));
+                                    put("email", rs.getString("email"));
+                                    put("phone", rs.getString("phone"));
+                                }}
+                    ).forEach(System.out::println);
+
+                    return RepeatStatus.FINISHED;
+                }) //
+                .build();
+    }
 
     @Bean
-    public Job helloWorldJob(JobBuilderFactory jobs, Step importAddressListStep) {
+    public Job helloWorldJob(
+            JobBuilderFactory jobs,
+            @Qualifier("importAddressListStep") Step importAddressListStep,
+            @Qualifier("verifyImportStep") Step verifyImportStep)
+    {
         return jobs.get("ImportAddressListJob") //
                 .incrementer(new RunIdIncrementer()) //
-                .start(importAddressListStep)
+                .start(importAddressListStep) //
+                .next(verifyImportStep) //
                 .build();
     }
 }
