@@ -379,7 +379,7 @@ You need to follow the next 2 steps:
                     .get("VerifyImportStep") //
                     .tasklet((contribution, chunkContext) -> {
                         jdbcTemplate.query(
-                                "SELECT name,email,phone FROM contacts",
+                                "SELECT name,email,phone FROM contacts ORDER BY name",
     
                                 (rs, rowNum) ->
                                     new HashMap<String, String>() {{
