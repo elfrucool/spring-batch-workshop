@@ -135,6 +135,7 @@ As in [Exercise 1][EXERCISE-1], just create a method to define the job bean insi
 @Configuration
 @EnableBatchProcessing
 public class BatchConfiguration {
+
     @Bean
     public Job helloWorldJob(JobBuilderFactory jobs, Step importAddressListStep) {
         return jobs.get("ImportAddressListJob") //
@@ -142,7 +143,9 @@ public class BatchConfiguration {
                 .start(importAddressListStep)
                 .build();
     }
-}```
+    
+}
+```
 
 ##TASK 6: DEFINE IMPORT STEP
 ##TASK 7: DEFINE THE [ItemReader][BATCH-ITEM-READER]
