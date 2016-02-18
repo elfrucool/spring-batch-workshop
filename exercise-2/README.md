@@ -167,6 +167,8 @@ public class BatchConfiguration {
 
 ##TASK 7: DEFINE IMPORT STEP
 
+Add the following method to the `BatchConfiguration` class:
+
 ```java
 // package declaration
 // several imports
