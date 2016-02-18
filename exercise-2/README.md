@@ -267,9 +267,45 @@ public class BatchConfiguration {
         return item -> item;
     }
 
+}
 ```
 
 ##TASK 10: DEFINE THE [ItemWriter][BATCH-ITEM-WRITER]
+
+Add a method to instantiate the `ItemWriter` object configured to write to database:
+
+```java
+// package declaration
+// several imports
+
+@Configuration
+@EnableBatchProcessing
+public class BatchConfiguration {
+
+    // helloWorldJob() {...}
+
+    // importAddressListStep() {...}
+
+    // reader() {...}
+    
+    // processor() {...}
+    
+    @Bean
+    public ItemWriter<Contact> writer(DataSource dataSource) { // spring boot automatically will create dataSource bean
+        JdbcBatchItemWriter<Contact> writer = new JdbcBatchItemWriter<>();
+        
+        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
+        writer.setSql("INSERT INTO contacts (name, email, phone) VALUES (:name, :email, :phone)");
+        writer.setDataSource(dataSource);
+        
+        return writer;
+    }
+
+}
+```
+
+<strong>Remarks: </strong> It is worth to check javadoc for each created class. Also, spring boot will automatically create a bean `dataSource` and autowire whenever it is required. See: [Spring Boot Database Initialization][[SPRING-BOOT-DATABASE-INITIALIZATION]]
+
 ##TASK 11: DEFINE VERIFY STEP
 ##TASK 12: BUILD, RUN & ENJOY
 
