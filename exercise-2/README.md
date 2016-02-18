@@ -3,7 +3,7 @@
 Given a csv file which represents a contacts list (name, email and phone), we will create a job _ImportAddressListJob_ 
 to import all contacts to a relational database.
 
-To do it, we will go through 12 tasks that are the following:
+To do it, we will go through 13 tasks that are the following:
 
 1. Set up build environment
 1. Set up spring batch infrastructure and application
@@ -17,6 +17,7 @@ To do it, we will go through 12 tasks that are the following:
 1. Define the [ItemWriter][BATCH-ITEM-WRITER]
 1. Define verify step
 1. Build, run & enjoy
+1. Play around
 
 In spring batch, each job is a sequence of steps (see: [Configuring and Running a Job](https://docs.spring.io/spring-batch/reference/html/configureJob.html)); steps come in two flavours: tasklet oriented and chunk oriented (see: [Configuring Step](https://docs.spring.io/spring-batch/reference/html/configureStep.html)).
 
@@ -310,11 +311,10 @@ public class BatchConfiguration {
 
 The final step of the job will add a step (_VerifyImportStep_) to verify that the content was correctly imported through executing a SQL query and dump the results.
  
-You need to follow the next 3 steps:
+You need to follow the next 2 steps:
 
 1. Update job definition with the new expected step
 1. Create the new step
-1. Qualify steps to allow spring differentiate them
 
 ### Details:
 
@@ -356,17 +356,67 @@ You need to follow the next 3 steps:
 1. Create the new step
 
     ```java
-    ```
+    // package declaration
+    // several imports
     
-    <strong>Remarks:</strong> This step is mainly based on: spring boot's [Accessing Relational Data using JDBC with Spring](https://spring.io/guides/gs/relational-data-access/).
+    @Configuration
+    @EnableBatchProcessing
+    public class BatchConfiguration {
+    
+        // helloWorldJob() {...}
+    
+        // importAddressListStep() {...}
+    
+        // reader() {...}
+        
+        // processor() {...}
+        
+        // writer() {...}
 
+        @Bean
+        public Step verifyImportStep(StepBuilderFactory steps, JdbcTemplate jdbcTemplate) {
+            return steps //
+                    .get("VerifyImportStep") //
+                    .tasklet((contribution, chunkContext) -> {
+                        jdbcTemplate.query(
+                                "SELECT name,email,phone FROM contacts",
+    
+                                (rs, rowNum) ->
+                                    new HashMap<String, String>() {{
+                                        put("name", rs.getString("name"));
+                                        put("email", rs.getString("email"));
+                                        put("phone", rs.getString("phone"));
+                                    }}
+                        ).forEach(System.out::println);
+    
+                        return RepeatStatus.FINISHED;
+                    }) //
+                    .build();
+        }
 
-1. Qualify steps to allow spring differentiate them
-
-    ```java
+    }
     ```
+
+    <strong>Remarks:</strong> This step is mainly based on: spring boot's [Accessing Relational Data using JDBC with Spring](https://spring.io/guides/gs/relational-data-access/).
+    
+**Note:** Spring boot makes spring smart enough to identify beans based on name instead of based on type.
 
 ##TASK 12: BUILD, RUN & ENJOY
+
+Follow the next three steps: (see [exercise 1][EXERCISE-1] for more details)
+
+1. make the big fat executable jar file: `shell$ gradle build`
+1. look for jar `build/libs/my-spring-batch-app-0.1.0.jar`
+1. execute `shell$ java -jar build/libs/my-spring-batch-app-0.1.0.jar`
+
+##TASK 13: PLAY AROUND
+
+Try to do the following four things:
+
+1. Use `contacts-big.csv` file and see the results.
+1. Add an additional column `birth_date` to both the csv file and the database, and import/dump it
+1. Add a logic in ItemProcessor: when name is 'bob' then return null (this will filter out that row)
+1. Change the _VerifyImportStep_ to use: reader/processor/writer instead of single monolytic tasklet (you may need to rename some function/beans to differentiate readers/processors/writers for each step.
 
 <!-- global links -->
 

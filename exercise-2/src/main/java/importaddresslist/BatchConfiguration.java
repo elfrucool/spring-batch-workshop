@@ -30,9 +30,6 @@ import java.util.Map;
 @Configuration
 @EnableBatchProcessing
 public class BatchConfiguration {
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-
     @Bean
     public ItemReader<Contact> reader() {
         FlatFileItemReader<Contact> reader = new FlatFileItemReader<>();
@@ -45,7 +42,7 @@ public class BatchConfiguration {
                 setNames(new String[]{"name", "email", "phone"});
             }});
 
-            setFieldSetMapper(new BeanWrapperFieldSetMapper<Contact>(){{
+            setFieldSetMapper(new BeanWrapperFieldSetMapper<Contact>() {{
                 setTargetType(Contact.class);
             }});
         }});
@@ -72,7 +69,7 @@ public class BatchConfiguration {
         return writer;
     }
 
-    @Bean(name = "importAddressListStep")
+    @Bean
     public Step importAddressListStep(
             StepBuilderFactory steps,
             ItemReader<Contact> reader,
@@ -87,7 +84,7 @@ public class BatchConfiguration {
                 .build();
     }
 
-    @Bean(name = "verifyImportStep")
+    @Bean
     public Step verifyImportStep(StepBuilderFactory steps, JdbcTemplate jdbcTemplate) {
         return steps //
                 .get("VerifyImportStep") //
@@ -96,11 +93,11 @@ public class BatchConfiguration {
                             "SELECT name,email,phone FROM contacts",
 
                             (rs, rowNum) ->
-                                new HashMap<String, String>() {{
-                                    put("name", rs.getString("name"));
-                                    put("email", rs.getString("email"));
-                                    put("phone", rs.getString("phone"));
-                                }}
+                                    new HashMap<String, String>() {{
+                                        put("name", rs.getString("name"));
+                                        put("email", rs.getString("email"));
+                                        put("phone", rs.getString("phone"));
+                                    }}
                     ).forEach(System.out::println);
 
                     return RepeatStatus.FINISHED;
@@ -111,9 +108,8 @@ public class BatchConfiguration {
     @Bean
     public Job helloWorldJob(
             JobBuilderFactory jobs,
-            @Qualifier("importAddressListStep") Step importAddressListStep,
-            @Qualifier("verifyImportStep") Step verifyImportStep)
-    {
+            Step importAddressListStep,
+            Step verifyImportStep) {
         return jobs.get("ImportAddressListJob") //
                 .incrementer(new RunIdIncrementer()) //
                 .start(importAddressListStep) //
