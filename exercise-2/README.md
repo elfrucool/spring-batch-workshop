@@ -304,7 +304,7 @@ public class BatchConfiguration {
 }
 ```
 
-<strong>Remarks: </strong> It is worth to check javadoc for each created class. Also, spring boot will automatically create a bean `dataSource` and autowire whenever it is required. See: [Spring Boot Database Initialization][[SPRING-BOOT-DATABASE-INITIALIZATION]]
+<strong>Remarks: </strong> It is worth to check javadoc for each created class. Also, spring boot will automatically create a bean `dataSource` and autowire whenever it is required. See: [Spring Boot Database Initialization][SPRING-BOOT-DATABASE-INITIALIZATION]
 
 ##TASK 11: DEFINE VERIFY STEP
 ##TASK 12: BUILD, RUN & ENJOY
