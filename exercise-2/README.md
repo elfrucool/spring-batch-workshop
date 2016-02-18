@@ -189,7 +189,7 @@ public class BatchConfiguration {
             ItemWriter<Contact> writer) //
     {
         return steps.get("ImportAddressListStep") //
-                .chunk(10) // process items in groups of 10
+                .<Contact, Contact>chunk(10) // process items in groups of 10
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
@@ -198,6 +198,8 @@ public class BatchConfiguration {
     
 }
 ```
+
+<strong>Remarks:</strong> `chunk` method needs to be parameterized in order to avoid compiler errors.
 
 ##TASK 8: DEFINE THE [ItemReader][BATCH-ITEM-READER]
 
@@ -241,6 +243,32 @@ public class BatchConfiguration {
 <strong>Rationale:</strong> Here are many things that need an explanation, although the names & javadoc are an excellent source of understanding.
 
 ##TASK 9: DEFINE THE [ItemProcessor][BATCH-ITEM-PROCESSOR]
+
+For this moment, we only will use our own implementation of [PassThroughItemProcessor](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/support/PassThroughItemProcessor.html) which actually doesn't do anything except passing the object to the writer.
+
+Feel free to add some custom code such as logging, changing case, etc.
+
+```java
+// package declaration
+// several imports
+
+@Configuration
+@EnableBatchProcessing
+public class BatchConfiguration {
+
+    // helloWorldJob() {...}
+
+    // importAddressListStep() {...}
+
+    // reader() {...}
+    
+    @Bean
+    public ItemProcessor<Contact, Contact> processor() {
+        return item -> item;
+    }
+
+```
+
 ##TASK 10: DEFINE THE [ItemWriter][BATCH-ITEM-WRITER]
 ##TASK 11: DEFINE VERIFY STEP
 ##TASK 12: BUILD, RUN & ENJOY

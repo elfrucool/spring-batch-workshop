@@ -20,6 +20,13 @@ import org.springframework.core.io.ClassPathResource;
 @Configuration
 @EnableBatchProcessing
 public class BatchConfiguration {
+    /**
+     * @see org.springframework.batch.item.support.PassThroughItemProcessor
+     */
+    @Bean
+    public ItemProcessor<Contact, Contact> processor() {
+        return item -> item;
+    }
 
     @Bean
     public ItemReader<Contact> reader() {
@@ -49,7 +56,7 @@ public class BatchConfiguration {
             ItemWriter<Contact> writer) //
     {
         return steps.get("ImportAddressListStep") //
-                .chunk(10) // process items in groups of 10
+                .<Contact, Contact>chunk(10) // process items in groups of 10
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
