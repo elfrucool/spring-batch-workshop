@@ -128,6 +128,22 @@ my name 3,name3@email.com,333,333,3333
 ```
 
 ##TASK 5: DEFINE JOB
+
+As in [Exercise 1][EXERCISE-1], just create a method to define the job bean inside `importaddresslist.BatchConfiguration` class:
+
+```java
+@Configuration
+@EnableBatchProcessing
+public class BatchConfiguration {
+    @Bean
+    public Job helloWorldJob(JobBuilderFactory jobs, Step importAddressListStep) {
+        return jobs.get("ImportAddressListJob") //
+                .incrementer(new RunIdIncrementer()) //
+                .start(importAddressListStep)
+                .build();
+    }
+}```
+
 ##TASK 6: DEFINE IMPORT STEP
 ##TASK 7: DEFINE THE [ItemReader][BATCH-ITEM-READER]
 ##TASK 8: DEFINE THE [ItemProcessor][BATCH-ITEM-PROCESSOR]
