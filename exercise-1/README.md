@@ -243,16 +243,13 @@ Details:
     public class BatchConfiguration {
         @Bean
         public Tasklet helloTasklet() {
-            return new Tasklet() {
-                @Override
-                public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-                    System.out.println("=================================================");
-                    System.out.println("HELLO WORLD");
-                    System.out.println("=================================================");
-                    return RepeatStatus.FINISHED;
-                }
+            return (contribution, chunkContext) -> {
+                System.out.println("=================================================");
+                System.out.println("HELLO WORLD");
+                System.out.println("=================================================");
+                return RepeatStatus.FINISHED;
             };
-        }
+    }
     ```
 
     <strong>Rationale:</strong> Batch steps come in two flavours: [tasklet][TASKLET-JAVADOC] oriented and [chunk](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/step/item/ChunkOrientedTasklet.html) oriented (a tasklet that uses an [ItemReader](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/ItemReader.html), an [ItemProcessor](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/ItemProcessor.html) and an [ItemWriter](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/ItemWriter.html) to process chunks of data in a single transaction, we will see more in next exercises, for the impatients: see [Configuring Step](https://docs.spring.io/spring-batch/reference/html/configureStep.html))

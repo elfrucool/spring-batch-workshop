@@ -21,14 +21,11 @@ import javax.sql.DataSource;
 public class BatchConfiguration {
     @Bean
     public Tasklet helloTasklet() {
-        return new Tasklet() {
-            @Override
-            public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-                System.out.println("=================================================");
-                System.out.println("HELLO WORLD");
-                System.out.println("=================================================");
-                return RepeatStatus.FINISHED;
-            }
+        return (contribution, chunkContext) -> {
+            System.out.println("=================================================");
+            System.out.println("HELLO WORLD");
+            System.out.println("=================================================");
+            return RepeatStatus.FINISHED;
         };
     }
 
