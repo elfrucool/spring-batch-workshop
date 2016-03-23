@@ -46,7 +46,7 @@ Details:
     If you are in a bash terminal, you can create all of them with the following command:
 
     ```sh
-    shell$ mkdir -pv src/{main,test}/{java/resources}
+    shell$ mkdir -pv src/{main,test}/{java,resources}
     ```
 
     The following directories must exist:
