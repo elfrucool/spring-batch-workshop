@@ -138,12 +138,14 @@ Then refresh dependencies in your IDE
 
 ### STEP 2. Prevent the application to auto-launch spring batch jobs
 
-bla bla
+Spring boot automatically launches batch application unless you set this property to false:
 
 ```properties
 # ... other properties ...
 spring.batch.job.enabled=false
 ```
+
+See: http://stackoverflow.com/questions/23447948/how-spring-boot-run-batch-jobs
 
 ### STEP 3. Create a controller to launch the batch job through clicking a button
 
