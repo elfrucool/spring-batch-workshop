@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Import Address List batch job Results</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Import Address List Results</h1>
+
+<pre th:text="${execution}"></pre>
+
+<a href="#" th:href="@{/importaddress}">Run the job again</a>
+
+</body>
+</html>

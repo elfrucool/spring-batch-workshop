@@ -101,308 +101,169 @@ Follow the next five steps: (see [exercise 1][EXERCISE-1] for more details)
 
 About `batch_*` tables see: [http://docs.spring.io/spring-batch/reference/html/metaDataSchema.html](http://docs.spring.io/spring-batch/reference/html/metaDataSchema.html)
 
-<!--
+## TASK 3: LAUNCH A BATCH JOB FROM A WEB REQUEST CALL
 
-##TASK 4: SET UP IMPORT ENVIRONMENT
+Until now, the examples are assuming that the batch job is the main purpose of the entire application. But in many cases the batch job is part of another application; perhaps to import a catalog on a regular basis or to generate ond depand reports, etc.
 
-You need to define where will the input fille be processed, and also we need the file itself, for this exercise, we will use the classpath, although in production environments, either fixed absolute paths are best or based on configurations/parameters.
+In this task we will learn how to launch a batch job programmatically from an MVC controller call. This is a situation for an on-demand launching of the job (it could be a user clicking a button "run now" or a REST service call that is invoked in certain conditions).
 
-Create a file named `contacts.csv` at `src/main/resources/` with the following contents:
+For this task, you need to follow the next 7 steps:
 
-```csv
-name,email,phone
-my name 1,name1@email.com,111-111-1111
-my name 2,name2@email.com,222-222-2222
-my name 3,name3@email.com,333-333-3333
+1. Add dependencies to spring MVC
+1. Prevent the application to auto-launch spring batch jobs
+1. Create a controller to launch the batch job through clicking a button
+1. Create a view with a button to launch the job
+1. Launch the job when the button is clicked
+1. See job execution result in a view
+1. Build & test & enjoy
+
+### STEP 1. Add dependencies to spring MVC
+
+This step is mainly based on: https://spring.io/guides/gs/serving-web-content/
+
+Open `build.gradle` file and add the following dependency two dependencies: `org.springframework.boot:spring-boot-devtools` and `org.springframework.boot:spring-boot-starter-thymeleaf`. See https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-devtools.html, http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-developing-web-applications.html and http://www.thymeleaf.org/ for further reference.
+
+```groovy
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf") // <-- spring mvc with thymeleaf template engine
+    compile("org.springframework.boot:spring-boot-devtools") // <-- to restart/reload if something changes
+    compile("org.springframework.boot:spring-boot-starter-batch")
+    compile("org.springframework.boot:spring-boot-starter-jdbc")
+    compile("org.postgresql:postgresql:9.4.1208.jre7")
+    testCompile("junit:junit")
+}
 ```
 
-##TASK 5: CREATE `Contact` OBJECT
+Then refresh dependencies in your IDE
 
-You will use a POJO to store per-row information about the contacts to import to database:
+### STEP 2. Prevent the application to auto-launch spring batch jobs
+
+bla bla
+
+```properties
+# ... other properties ...
+spring.batch.job.enabled=false
+```
+
+### STEP 3. Create a controller to launch the batch job through clicking a button
+
+In package `importaddresslist` create a class named `ImportAddressController` with the following contents:
 
 ```java
 package importaddresslist;
 
-public class Contact {
-    private String name;
-    private String email;
-    private String phone;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-    // getters & setters & toString/equals/hashCode
+@Controller
+public class ImportAddressController {
+    @RequestMapping(value = "/importaddress", method = RequestMethod.GET)
+    public String index() {
+        return "index";
+    }
 }
-
 ```
 
-##TASK 6: DEFINE JOB
+### STEP 4. Create a view with a button to launch the job
 
-As in [Exercise 1][EXERCISE-1], just create a method to define the job bean inside `importaddresslist.BatchConfiguration` class:
+Create the following folder: `src/main/resources/templates`, then create inside it a file named `index.html` with the following contents:
+
+```html
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Import Address List batch job</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Import Address List</h1>
+
+<form action="#" th:action="@{/importaddress}" method="post">
+    <p>Import Address List:</p>
+    <input type="submit" value="Now!"/>
+</form>
+
+</body>
+</html>
+```
+
+### STEP 5. Launch the job when the button is clicked
+
+We will process a POST request without arguments, we will send to the view the job execution results to render it:
 
 ```java
-@Configuration
-@EnableBatchProcessing
-public class BatchConfiguration {
+package importaddresslist;
 
-    @Bean
-    public Job helloWorldJob(JobBuilderFactory jobs, Step importAddressListStep) {
-        return jobs.get("ImportAddressListJob") //
-                .incrementer(new RunIdIncrementer()) //
-                .start(importAddressListStep)
-                .build();
-    }
+// imports...
+
+import java.util.Date;
+
+@Controller
+public class ImportAddressController {
+    @Autowired
+    private JobLauncher jobLauncher;
+
+    @Autowired
+    private Job importAddressListJob; // the job to be launched identified by its class (Job.class)
+
+    // existing index() method
+
+    @RequestMapping(value = "/importaddress", method = RequestMethod.POST)
+    public String importAddress(Model model) throws Exception {
     
+        JobParameters parameters = new JobParametersBuilder() //
+                .addDate("timestamp", new Date(), true) // to allow repeated executions of the job
+                .toJobParameters();
+                
+        JobExecution execution = jobLauncher.run(importAddressListJob, parameters);
+        
+        System.out.println("job execution: " + execution);
+        model.addAttribute("execution", execution);
+        
+        return "result";
+    }
 }
+
 ```
 
-##TASK 7: DEFINE IMPORT STEP
+<strong>Important: </strong> A job can only be successfully executed ONCE with the same set of parameters, so we are using a 'timestamp' parameter with the current date/time to allow subsequent executions of the job.
 
-Add the following method to the `BatchConfiguration` class:
+### STEP 6: See job execution result in a view
 
-```java
-// package declaration
-// several imports
+Put the following content into `src/main/resources/templates/result.html`:
 
-@Configuration
-@EnableBatchProcessing
-public class BatchConfiguration {
+```html
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Import Address List batch job Results</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Import Address List Results</h1>
 
-    // helloWorldJob() {...}
+<pre th:text="${execution}"></pre>
 
-    @Bean
-    public Step importAddressListStep(
-            StepBuilderFactory steps,
-            ItemReader<Contact> reader,
-            ItemProcessor<Contact, Contact> processor,
-            ItemWriter<Contact> writer) //
-    {
-        return steps.get("ImportAddressListStep") //
-                .<Contact, Contact>chunk(10) // process items in groups of 10
-                .reader(reader)
-                .processor(processor)
-                .writer(writer)
-                .build();
-    }
-    
-}
+<a href="#" th:href="@{/importaddress}">Run the job again</a>
+
+</body>
+</html>
 ```
 
-<strong>Remarks:</strong> `chunk` method needs to be parameterized in order to avoid compiler errors.
+### STEP 7. Build & test & enjoy
 
-##TASK 8: DEFINE THE [ItemReader][BATCH-ITEM-READER]
+Follow the next five steps: (see [exercise 1][EXERCISE-1] for more details)
 
-Create a method to instantiate the reader:
-
-```java
-// package declaration
-// several imports
-
-@Configuration
-@EnableBatchProcessing
-public class BatchConfiguration {
-
-    // helloWorldJob() {...}
-
-    // importAddressListStep() {...}
-
-    @Bean
-    public ItemReader<Contact> reader() {
-        FlatFileItemReader<Contact> reader = new FlatFileItemReader<>();
-        
-        reader.setResource(new ClassPathResource("contacts.csv"));
-        reader.setLinesToSkip(1); // we will skip column names row
-        
-        reader.setLineMapper(new DefaultLineMapper<Contact>() {{
-            setLineTokenizer(new DelimitedLineTokenizer() {{
-                setNames(new String[]{"name", "email", "phone"});
-            }});
-            
-            setFieldSetMapper(new BeanWrapperFieldSetMapper<Contact>(){{
-                setTargetType(Contact.class);
-            }});
-        }});
-        
-        return reader;
-    }
-
-}
-```
-
-<strong>Rationale:</strong> Here are many things that need an explanation, although the names & javadoc are an excellent source of understanding.
-
-##TASK 9: DEFINE THE [ItemProcessor][BATCH-ITEM-PROCESSOR]
-
-For this moment, we only will use our own implementation of [PassThroughItemProcessor](https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/support/PassThroughItemProcessor.html) which actually doesn't do anything except passing the object to the writer.
-
-Feel free to add some custom code such as logging, changing case, etc.
-
-```java
-// package declaration
-// several imports
-
-@Configuration
-@EnableBatchProcessing
-public class BatchConfiguration {
-
-    // helloWorldJob() {...}
-
-    // importAddressListStep() {...}
-
-    // reader() {...}
-    
-    @Bean
-    public ItemProcessor<Contact, Contact> processor() {
-        return item -> item;
-    }
-
-}
-```
-
-##TASK 10: DEFINE THE [ItemWriter][BATCH-ITEM-WRITER]
-
-Add a method to instantiate the `ItemWriter` object configured to write to database:
-
-```java
-// package declaration
-// several imports
-
-@Configuration
-@EnableBatchProcessing
-public class BatchConfiguration {
-
-    // helloWorldJob() {...}
-
-    // importAddressListStep() {...}
-
-    // reader() {...}
-    
-    // processor() {...}
-    
-    @Bean
-    public ItemWriter<Contact> writer(DataSource dataSource) { // spring boot automatically will create dataSource bean
-        JdbcBatchItemWriter<Contact> writer = new JdbcBatchItemWriter<>();
-        
-        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
-        writer.setSql("INSERT INTO contacts (name, email, phone) VALUES (:name, :email, :phone)");
-        writer.setDataSource(dataSource);
-        
-        return writer;
-    }
-
-}
-```
-
-<strong>Remarks: </strong> It is worth to check javadoc for each created class. Also, spring boot will automatically create a bean `dataSource` and autowire whenever it is required. See: [Spring Boot Database Initialization][SPRING-BOOT-DATABASE-INITIALIZATION]
-
-##TASK 11: DEFINE VERIFY STEP
-
-The final step of the job will add a step (_VerifyImportStep_) to verify that the content was correctly imported through executing a SQL query and dump the results.
- 
-You need to follow the next 2 steps:
-
-1. Update job definition with the new expected step
-1. Create the new step
-
-### Details:
-
-1. Update job definition with the new expected step
-
-    ```java
-    // package declaration
-    // several imports
-    
-    @Configuration
-    @EnableBatchProcessing
-    public class BatchConfiguration {
-    
-        @Bean
-        public Job helloWorldJob(JobBuilderFactory jobs, Step importAddressListStep, Step verifyImportStep) {
-            return jobs.get("ImportAddressListJob") //
-                    .incrementer(new RunIdIncrementer()) //
-                    .start(importAddressListStep) //
-                    .next(verifyImportStep) //
-                    .build();
-        }
-    
-        // importAddressListStep() {...}
-    
-        // reader() {...}
-        
-        // processor() {...}
-        
-        // writer() {...}
-    
-    }
-    ```
-    
-    We are introducing two changes to `helloWorldJob` method:
-    
-    1. We are adding a new `verifyImportStep` parameter
-    1. We are adding that step as `next` step
-    
-1. Create the new step
-
-    ```java
-    // package declaration
-    // several imports
-    
-    @Configuration
-    @EnableBatchProcessing
-    public class BatchConfiguration {
-    
-        // helloWorldJob() {...}
-    
-        // importAddressListStep() {...}
-    
-        // reader() {...}
-        
-        // processor() {...}
-        
-        // writer() {...}
-
-        @Bean
-        public Step verifyImportStep(StepBuilderFactory steps, JdbcTemplate jdbcTemplate) {
-            return steps //
-                    .get("VerifyImportStep") //
-                    .tasklet((contribution, chunkContext) -> {
-                        jdbcTemplate.query(
-                                "SELECT name,email,phone FROM contacts ORDER BY name",
-    
-                                (rs, rowNum) ->
-                                    new HashMap<String, String>() {{
-                                        put("name", rs.getString("name"));
-                                        put("email", rs.getString("email"));
-                                        put("phone", rs.getString("phone"));
-                                    }}
-                        ).forEach(System.out::println);
-    
-                        return RepeatStatus.FINISHED;
-                    }) //
-                    .build();
-        }
-
-    }
-    ```
-
-    <strong>Remarks:</strong> This step is mainly based on: spring boot's [Accessing Relational Data using JDBC with Spring](https://spring.io/guides/gs/relational-data-access/).
-    
-**Note:** Spring boot makes spring smart enough to identify beans based on name instead of based on type.
-
-##TASK 12: BUILD, RUN & ENJOY
-
-Follow the next three steps: (see [exercise 1][EXERCISE-1] for more details)
-
+1. clean tables in `batchworkshop` database (or delete/create it again)
 1. make the big fat executable jar file: `shell$ gradle build`
 1. look for jar `build/libs/my-spring-batch-app-0.1.0.jar`
 1. execute `shell$ java -jar build/libs/my-spring-batch-app-0.1.0.jar`
+1. Open http://localhost:8080/importaddress in a browser and click the _Now!_ button
+1. look at your batchworkshop database, examine all tables and learn
+1. use the `contacts-big.csv` file instead of `contacts.csv` file and examine `batch_*` tables and learn a bit about pagination.
+1. how could you list the `contacts` table records in a view (e.g. index.html) ?
 
-##TASK 13: PLAY AROUND
-
-Try to do the following four things:
-
-1. Use `contacts-big.csv` file and see the results.
-1. Add an additional column `birth_date` to both the csv file and the database, and import/dump it
-1. Add a logic in ItemProcessor: when name is 'Echo' then return null (this will filter out that row)
-1. Change the _VerifyImportStep_ to use: reader/processor/writer instead of single monolytic tasklet (you may need to rename some function/beans to differentiate readers/processors/writers for each step.
--->
 
 <!-- global links -->
 

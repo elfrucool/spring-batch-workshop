@@ -106,7 +106,7 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public Job helloWorldJob(
+    public Job importAddressListJob(
             JobBuilderFactory jobs,
             Step importAddressListStep,
             Step verifyImportStep) {
