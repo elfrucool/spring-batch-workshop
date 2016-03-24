@@ -27,11 +27,11 @@ To do so, follow the next 5 steps:
 1. Modify the sql script used in [exercise 2][EXERCISE-2] to fit in your favourite RDBMS.
 1. Run the application and see what happens
 
-### Create a database for this project in your RDBMS
+### Step 1. Create a database for this project in your RDBMS
 
 Let's call it `batchworkshop` or whatever name you like, just remember it.
 
-### Add a dependency to your RDBMS' JDBC driver and spring boot JDBC
+### Step 2. Add a dependency to your RDBMS' JDBC driver and spring boot JDBC
 
 In `build.gradle` add a dependency to the JDBC driver (erase/comment the existent hsqldb dependency) and add another dependency to spring boot jdbc:
 
@@ -54,7 +54,7 @@ Then refresh dependencies in your IDE
 1. You need to provide a DataSource connection pool, easiest way is adding the dependency `compile("org.springframework.boot:spring-boot-starter-jdbc")`. See section 29.1.2 of [http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html](http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html).
 
 
-### Tell the application what database are you using
+### Step 3. Tell the application what database are you using
 
 Create a file named `src/main/resources/application.properties` with the following contents (modify the fields according to what you have configured in your RDBMS):
 
@@ -74,7 +74,7 @@ See more:
 * [Spring Boot Database Initialization][SPRING-BOOT-DATABASE-INITIALIZATION]
 * [Spring Boot Externalising Configuration][SPRING-BOOT-EXTERNALISING-CONFIGURATION]
 
-### Create a contacts table in your RDBMS
+### Step 4. Create a contacts table in your RDBMS
 
 Change the original contents of `src/main/resources/schema.sql` with the following content:
 
@@ -89,7 +89,7 @@ CREATE TABLE contacts (
 
 <strong>Tip:</strong> you may test your script in your database directly and then erase the table before running the application. Or temporally set the property `spring.datasource.continueOnError=false` in `src/main/resources/application.properties` to test your script. See previous step for more information.
 
-### Run the application and see what happens
+### Step 5. Run the application and see what happens
 
 Follow the next five steps: (see [exercise 1][EXERCISE-1] for more details)
 
