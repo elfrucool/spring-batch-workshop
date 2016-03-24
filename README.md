@@ -8,7 +8,7 @@ SPRING BATCH WORKSHOP
 
 2. [PRACTICE 2: IMPORT ADDRESS LIST TO DATABASE](https://github.com/rvazquezglez/spring-batch-workshop/tree/master/exercise-2/README.md)
 
-3. PRACTICE 3: INTEGRATE WITH MY EXISTING APPLICATION
+3. [PRACTICE 3: INTEGRATE WITH MY EXISTING APPLICATION](https://github.com/rvazquezglez/spring-batch-workshop/tree/master/exercise-3/README.md)
 
 WORKSHOP 2
 
