@@ -12,5 +12,20 @@
     <input type="submit" value="Now!"/>
 </form>
 
+<div th:unless="${#lists.isEmpty(contacts)}">
+    <hr/>
+    <table border="1">
+        <thead>
+            <th>name</th>
+            <th>email</th>
+            <th>phone</th>
+        </thead>
+        <tr th:each="contact : ${contacts}">
+            <td th:text="${contact.name}">name</td>
+            <td th:text="${contact.email}">email</td>
+            <td th:text="${contact.phone}">phone</td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>
