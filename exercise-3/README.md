@@ -266,6 +266,51 @@ Follow the next five steps: (see [exercise 1][EXERCISE-1] for more details)
 1. use the `contacts-big.csv` file instead of `contacts.csv` file and examine `batch_*` tables and learn a bit about pagination.
 1. how could you list the `contacts` table records in a view (e.g. index.html) ?
 
+## TASK 4: LAUNCH A BATCH JOB PERIODICALLY
+
+Follow the next seven steps:
+
+1. Define `inbound`/`outbound` folders
+1. Modify the job to read the file from `inbound` folder
+1. Add a step to move the processed file from `inbound` to `outbound`
+1. Enable tasks framework
+1. Create a service that will be called periodically
+1. Use the service to launch the job
+1. Build & test & enjoy
+
+### STEP 1. Define `inbound`/`outbound` folders
+
+Create the following directories:
+
+```sh
+work/inbound
+work/outbound
+```
+
+The `inbound` directory is for putting the `contacts.csv` files to be processed, while the `outbound` directory is the place where the job will put the already processed `contacts.csv` files with the name convention: `contacts-YYMMDD__HHMMSS.csv`
+
+### STEP 2. Modify the job to read the file from `inbound` folder
+
+### STEP 3. Add a step to move the processed file from `inbound` to `outbound`
+
+### STEP 4. Enable tasks framework
+
+### STEP 5. Create a service that will be called periodically
+
+### STEP 6. Use the service to launch the job
+
+### STEP 7. Build & test & enjoy
+
+Follow the next five steps: (see [exercise 1][EXERCISE-1] for more details)
+
+1. clean tables in `batchworkshop` database (or delete/create it again)
+1. make the big fat executable jar file: `shell$ gradle build`
+1. look for jar `build/libs/my-spring-batch-app-0.1.0.jar`
+1. execute `shell$ java -jar build/libs/my-spring-batch-app-0.1.0.jar`
+1. look at the logs at an interval of ten seconds, examine the `outbound` folder
+1. look at your batchworkshop database, examine all tables and learn
+1. put another file in the `inbound` folder and see what happens.
+1. how could you list the `contacts` table records in a view (e.g. index.html) ?
 
 <!-- global links -->
 
