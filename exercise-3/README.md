@@ -40,7 +40,7 @@ In `build.gradle` add a dependency to the JDBC driver (erase/comment the existen
 ```groovy
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-batch")
-    compile("org.springframework.boot:spring-boot-starter-jdbc") <-- to create externalised DataSource beans
+    compile("org.springframework.boot:spring-boot-starter-jdbc") // <-- to create externalised DataSource beans
     compile("org.postgresql:postgresql:9.4.1208.jre7") // <-- instead of org.hsqldb:hsqldb
     testCompile("junit:junit")
 }
@@ -279,3 +279,4 @@ Follow the next five steps: (see [exercise 1][EXERCISE-1] for more details)
 [EXERCISE-2]: https://github.com/rvazquezglez/spring-batch-workshop/tree/master/exercise-2/README.md
 [SPRING-BOOT-DATABASE-INITIALIZATION]: https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html
 [SPRING-BOOT-EXTERNALISING-CONFIGURATION]: https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html
+[SPRING-BOOT-SCHEDULED]: https://spring.io/guides/gs/scheduling-tasks/
