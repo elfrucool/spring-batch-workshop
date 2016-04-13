@@ -140,7 +140,7 @@ Then refresh dependencies in your IDE
 
 ### STEP 2. Prevent the application to auto-launch spring batch jobs
 
-Spring boot automatically launches batch application unless you set this property to false:
+Spring boot automatically launches batch application unless you set this property to false in file `src/main/resources/application.properties`:
 
 ```properties
 # ... other properties ...
@@ -284,7 +284,7 @@ Follow the next seven steps:
 1. Use the service to launch the job
 1. Build & test & enjoy
 
-### STEP 1. Define `inbound`/`outbound` folders
+### STEP 1. Define inbound/outbound folders
 
 Yo will need a directory to put the new csv file to import (inbound), and a directory to put the processed file (outbound), there may be the case in which the job end with an error, in such case, you can take the file in outbound directory and after fixing it, put it again in inbound directory to be processed other time.
 
