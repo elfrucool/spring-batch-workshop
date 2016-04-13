@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -48,12 +49,16 @@ public class ImportAddressController {
 
     @RequestMapping(value = "/importaddress", method = RequestMethod.POST)
     public String importAddress(Model model) throws Exception {
-        JobParameters parameters = new JobParametersBuilder() //
-                .addDate("timestamp", new Date(), true) // to allow repeated executions of the job
-                .toJobParameters();
-        JobExecution execution = jobLauncher.run(importAddressListJob, parameters);
-        System.out.println("job execution: " + execution);
-        model.addAttribute("execution", execution);
+        if (new File("work/inbound/contacts.csv").exists()) {
+            JobParameters parameters = new JobParametersBuilder() //
+                    .addDate("timestamp", new Date(), true) // to allow repeated executions of the job
+                    .toJobParameters();
+            JobExecution execution = jobLauncher.run(importAddressListJob, parameters);
+            System.out.println("job execution: " + execution);
+            model.addAttribute("execution", execution);
+        } else {
+            model.addAttribute("execution", "there was no file to be processed, so nothing done.");
+        }
         return "result";
     }
 }

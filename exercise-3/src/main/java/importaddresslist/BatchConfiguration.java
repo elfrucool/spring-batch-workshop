@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -34,7 +35,7 @@ public class BatchConfiguration {
     public ItemReader<Contact> reader() {
         FlatFileItemReader<Contact> reader = new FlatFileItemReader<>();
 
-        reader.setResource(new ClassPathResource("contacts.csv"));
+        reader.setResource(new FileSystemResource("work/inbound/contacts.csv"));
         reader.setLinesToSkip(1); // we will skip column names row
 
         reader.setLineMapper(new DefaultLineMapper<Contact>() {{

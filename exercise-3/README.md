@@ -121,7 +121,9 @@ For this task, you need to follow the next 7 steps:
 
 This step is mainly based on: https://spring.io/guides/gs/serving-web-content/
 
-Open `build.gradle` file and add the following dependency two dependencies: `org.springframework.boot:spring-boot-devtools` and `org.springframework.boot:spring-boot-starter-thymeleaf`. See https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-devtools.html, http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-developing-web-applications.html and http://www.thymeleaf.org/ for further reference.
+Open `build.gradle` file and add the following dependency two dependencies: `org.springframework.boot:spring-boot-devtools` and `org.springframework.boot:spring-boot-starter-thymeleaf`.
+ 
+See https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-devtools.html, http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-developing-web-applications.html and http://www.thymeleaf.org/ for further reference.
 
 ```groovy
 dependencies {
@@ -268,6 +270,10 @@ Follow the next five steps: (see [exercise 1][EXERCISE-1] for more details)
 
 ## TASK 4: LAUNCH A BATCH JOB PERIODICALLY
 
+Often, the batch jobs run periodically without direct human intervention; examples: a daily report, a hourly feed processing; a monthly clean up process...
+
+In this task, you will make your job to run periodically (every 10 seconds). Imagine this is a system that continuously imports a csv into a database (perhaps the file is sent from an external system through SFTP)
+
 Follow the next seven steps:
 
 1. Define `inbound`/`outbound` folders
@@ -280,6 +286,8 @@ Follow the next seven steps:
 
 ### STEP 1. Define `inbound`/`outbound` folders
 
+Yo will need a directory to put the new csv file to import (inbound), and a directory to put the processed file (outbound), there may be the case in which the job end with an error, in such case, you can take the file in outbound directory and after fixing it, put it again in inbound directory to be processed other time.
+
 Create the following directories:
 
 ```sh
@@ -287,11 +295,73 @@ work/inbound
 work/outbound
 ```
 
-The `inbound` directory is for putting the `contacts.csv` files to be processed, while the `outbound` directory is the place where the job will put the already processed `contacts.csv` files with the name convention: `contacts-YYMMDD__HHMMSS.csv`
+The `inbound` directory is for putting the `contacts.csv` files to be processed, while the `outbound` directory is the place where the job will put the already processed `contacts.csv` files with the name convention: `contacts-YYMMDD__HHMMSS.csv`.
+ 
+The reason to append the date-time to the name of the file is for, in case of a problem, easily identify which file caused the error.
 
 ### STEP 2. Modify the job to read the file from `inbound` folder
 
-### STEP 3. Add a step to move the processed file from `inbound` to `outbound`
+We will change the location of the `contacts.csv` file from classpath to `work/inbound` folder.
+
+```java
+package importaddresslist;
+
+// imports...
+
+@Configuration
+@EnableBatchProcessing
+public class BatchConfiguration {
+    @Bean
+    public ItemReader<Contact> reader() {
+        FlatFileItemReader<Contact> reader = new FlatFileItemReader<>();
+
+        reader.setResource(new FileSystemResource("work/inbound/contacts.csv")); // <-- change ClassPathResource("contacts.csv") with this 
+        reader.setLinesToSkip(1); // we will skip column names row
+        
+        // other stuff...
+        
+        return reader;
+    }
+    // other methods
+}
+```
+
+**Notes:**
+
+1. About resources in spring, see: [http://docs.spring.io/autorepo/docs/spring/3.2.x/spring-framework-reference/html/resources.html](http://docs.spring.io/autorepo/docs/spring/3.2.x/spring-framework-reference/html/resources.html)
+
+1. The folder location is **relative to where the application is executed**. If you got an exception about resource not available, either check where is the application being executed or set an absolute path. In production, either you can [externalize the configuration][SPRING-BOOT-EXTERNALISING-CONFIGURATION] or set an absolute path (a short an easy-to-remember one) e.g. `/var/my-job/inbound` & `/var/my-job/outbound`.
+
+1. Since you are no longer reading the resource from classpath, you need a mechanism for Task #2 for identifying if the file already exist so you don't get an exception if it is absent, this is the suggested change in `ImportAddressController.java`:
+
+```java
+package importaddresslist;
+
+// several imports
+
+@Controller
+public class ImportAddressController {
+
+    // other stuff
+
+    @RequestMapping(value = "/importaddress", method = RequestMethod.POST)
+    public String importAddress(Model model) throws Exception {
+        if (new File("work/inbound/contacts.csv").exists()) { // <-- add this if
+            JobParameters parameters = new JobParametersBuilder() //
+                    .addDate("timestamp", new Date(), true) // to allow repeated executions of the job
+                    .toJobParameters();
+            JobExecution execution = jobLauncher.run(importAddressListJob, parameters);
+            System.out.println("job execution: " + execution);
+            model.addAttribute("execution", execution);
+        } else {
+            model.addAttribute("execution", "there was no file to be processed, so nothing done.");
+        }
+        return "result";
+    }
+}
+```
+
+### STEP 3. Add a step to move the processed file from inbound to outbound
 
 ### STEP 4. Enable tasks framework
 
