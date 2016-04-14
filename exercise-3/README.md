@@ -91,7 +91,7 @@ CREATE TABLE contacts (
 
 ### Step 5. Run the application and see what happens
 
-Follow the next five steps: (see [exercise 1][EXERCISE-1] for more details)
+Follow the next five actions: (see [exercise 1][EXERCISE-1] for more details)
 
 1. make the big fat executable jar file: `shell$ gradle build`
 1. look for jar `build/libs/my-spring-batch-app-0.1.0.jar`
@@ -257,7 +257,7 @@ Put the following content into `src/main/resources/templates/result.html`:
 
 ### STEP 7. Build & test & enjoy
 
-Follow the next five steps: (see [exercise 1][EXERCISE-1] for more details)
+Follow the next five actions: (see [exercise 1][EXERCISE-1] for more details)
 
 1. clean tables in `batchworkshop` database (or delete/create it again)
 1. make the big fat executable jar file: `shell$ gradle build`
@@ -446,7 +446,7 @@ public class BatchConfiguration {
 
 ### STEP 7. Build & test & enjoy
 
-Follow the next five steps: (see [exercise 1][EXERCISE-1] for more details)
+Follow the next nine actions: (see [exercise 1][EXERCISE-1] for more details)
 
 1. clean tables in `batchworkshop` database (or delete/create it again)
 1. make the big fat executable jar file: `shell$ gradle build`
@@ -456,6 +456,7 @@ Follow the next five steps: (see [exercise 1][EXERCISE-1] for more details)
 1. look at your batchworkshop database, examine all tables and learn
 1. put another file in the `inbound` folder and see what happens.
 1. how could you list the `contacts` table records in a view (e.g. index.html) ?
+1. how do you read files named `contacts*.csv` ?
 
 <!-- global links -->
 
