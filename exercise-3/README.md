@@ -9,8 +9,6 @@ To do it, we will go through 4 tasks that are the following:
 1. Launch a batch job from a web request call
 1. Launch a batch job periodically
 
-
-
 ## TASK 1: PREPARE ENVIRONMENT
 
 Since we already practiced this in [exercise 1][EXERCISE-1] and [exercise 2][EXERCISE-2], and also, since we will need that code, you will continue this practice from the code in [exercise 2][EXERCISE-2].
@@ -52,7 +50,6 @@ Then refresh dependencies in your IDE
 
 1. `hsqldb` dependency is transitively bring to the classpath, so not removing it from `build.gradle` has no side effects except readability.
 1. You need to provide a DataSource connection pool, easiest way is adding the dependency `compile("org.springframework.boot:spring-boot-starter-jdbc")`. See section 29.1.2 of [http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html](http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html).
-
 
 ### Step 3. Tell the application what database are you using
 
@@ -257,7 +254,7 @@ Put the following content into `src/main/resources/templates/result.html`:
 
 ### STEP 7. Build & test & enjoy
 
-Follow the next five actions: (see [exercise 1][EXERCISE-1] for more details)
+Follow the next eight actions: (see [exercise 1][EXERCISE-1] for more details)
 
 1. clean tables in `batchworkshop` database (or delete/create it again)
 1. make the big fat executable jar file: `shell$ gradle build`
