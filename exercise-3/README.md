@@ -271,10 +271,11 @@ Often, the batch jobs run periodically without direct human intervention; exampl
 
 In this task, you will make your job to run periodically (every 10 seconds). Imagine this is a system that continuously imports a csv into a database (perhaps the file is sent from an external system through SFTP)
 
-Follow the next seven steps:
+Follow the next eight steps:
 
 1. Define `inbound`/`outbound` folders
 1. Modify the job to read the file from `inbound` folder
+1. Modify `ImportAddressController` to deal with non-existent contacts.csv file
 1. Add a step to move the processed file from `inbound` to `outbound`
 1. Enable tasks framework
 1. Create a service that will be called periodically
@@ -285,7 +286,7 @@ Follow the next seven steps:
 
 Yo will need a directory to put the new csv file to import (inbound), and a directory to put the processed file (outbound), there may be the case in which the job end with an error, in such case, you can take the file in outbound directory and after fixing it, put it again in inbound directory to be processed other time.
 
-Create the following directories:
+Create the following directories in the path where you run the application:
 
 ```sh
 work/inbound
@@ -299,6 +300,8 @@ The reason to append the date-time to the name of the file is for, in case of a 
 ### STEP 2. Modify the job to read the file from `inbound` folder
 
 We will change the location of the `contacts.csv` file from classpath to `work/inbound` folder.
+
+Modify `BatchConfiguration.java` class:
 
 ```java
 package importaddresslist;
@@ -327,9 +330,11 @@ public class BatchConfiguration {
 
 1. About resources in spring, see: [http://docs.spring.io/autorepo/docs/spring/3.2.x/spring-framework-reference/html/resources.html](http://docs.spring.io/autorepo/docs/spring/3.2.x/spring-framework-reference/html/resources.html)
 
-1. The folder location is **relative to where the application is executed**. If you got an exception about resource not available, either check where is the application being executed or set an absolute path. In production, either you can [externalize the configuration][SPRING-BOOT-EXTERNALISING-CONFIGURATION] or set an absolute path (a short an easy-to-remember one) e.g. `/var/my-job/inbound` & `/var/my-job/outbound`.
+1. The folder location is **relative to where the application is executed**. If you got an exception about resource not available, either check where is the application being executed and place the `work` folder in that place or set an absolute path. In production, either you can [externalize the configuration][SPRING-BOOT-EXTERNALISING-CONFIGURATION] or set an absolute path (a short an easy-to-remember one) e.g. `/var/my-job/inbound` & `/var/my-job/outbound`.
 
-1. Since you are no longer reading the resource from classpath, you need a mechanism for Task #2 for identifying if the file already exist so you don't get an exception if it is absent, this is the suggested change in `ImportAddressController.java`:
+### STEP 3: Modify ImportAddressController to deal with non-existent contacts.csv file
+
+Since you are no longer reading the resource from classpath, you need a mechanism for Web MVC launching job (task #2) for identifying if the file already exist so you don't get an exception if it is absent, this is the suggested change in `ImportAddressController.java`:
 
 ```java
 package importaddresslist;
@@ -358,9 +363,9 @@ public class ImportAddressController {
 }
 ```
 
-### STEP 3. Add a step to move the processed file from inbound to outbound
+### STEP 4. Add a step to move the processed file from inbound to outbound
 
-You need to take two actions:
+You need to take two actions in `BatchConfiguration.java` class:
 
 1. Create the step, and
 1. Add the step into the job
@@ -435,7 +440,7 @@ public class BatchConfiguration {
 
 **Note:** you man see that the date/time is not the current one (it happened to me) this is because the JVM is probably running in other time zone (in my case GMT+0)
 
-### STEP 4. Enable tasks framework
+### STEP 5. Enable tasks framework
 
 In `Application.java` add the [@EnableScheduling](http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#scheduling-enable-annotation-support) annotation:
 
@@ -456,13 +461,93 @@ public class Application {
 
 ```
 
-**Rationale:** see: [Spring Boot Scheduled tasks][SPRING-BOOT-SCHEDULED], also: [http://docs.spring.io/spring/docs/current/spring-framework-reference/html/scheduling.html](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/scheduling.html)
+**Rationale:** see: [Spring Boot Scheduled tasks][SPRING-BOOT-SCHEDULED], also: [http://docs.spring.io/spring/docs/current/spring-framework-reference/html/scheduling.html][SPRING-SCHEDULING]
 
-### STEP 5. Create a service that will be called periodically
+### STEP 6. Create a service that will be called periodically
 
-### STEP 6. Use the service to launch the job
+You need a service that will be invoked by spring-task framework periodically.
 
-### STEP 7. Build & test & enjoy
+Create a class named `src/main/java/importaddresslist/ScheduledService.java` with the following contents:
+
+```java
+package importaddresslist;
+
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+
+@Component
+public class ScheduledService {
+    
+    @Scheduled(fixedRate =  10000) // launch every 10 seconds
+    public void importAddressList() {
+        System.out.println("simulating i'm importing the address list, date/time is:" + new Date());
+    }
+}
+```
+
+**Notes:**
+1. [@Component](http://docs.spring.io/spring-framework/docs/current/spring-framework-reference/html/beans.html#beans-classpath-scanning) annotation is for put this class in spring application context
+1. [@Scheduled][SPRING-SCHEDULING] annotation is for executing this method based on the given configuration, see reference
+
+If you launch the application at this stage, you should see the following (or similar) in the console:
+
+```
+016-04-14 02:01:04.106  INFO 53845 --- [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2016-04-14 02:01:04.143  INFO 53845 --- [  restartedMain] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+simulating i'm importing the address list, date/time is:Thu Apr 14 02:01:04 UTC 2016
+2016-04-14 02:01:04.217  INFO 53845 --- [  restartedMain] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8888 (http)
+2016-04-14 02:01:04.222  INFO 53845 --- [  restartedMain] importaddresslist.Application            : Started Application in 4.117 seconds (JVM running for 4.568)
+simulating i'm importing the address list, date/time is:Thu Apr 14 02:01:05 UTC 2016
+simulating i'm importing the address list, date/time is:Thu Apr 14 02:01:06 UTC 2016
+simulating i'm importing the address list, date/time is:Thu Apr 14 02:01:07 UTC 2016
+simulating i'm importing the address list, date/time is:Thu Apr 14 02:01:08 UTC 2016
+simulating i'm importing the address list, date/time is:Thu Apr 14 02:01:09 UTC 2016
+```
+
+### STEP 7. Use the service to launch the job
+
+Modify the `ScheduledService.java` class to add the following logic:
+
+```java
+package importaddresslist;
+
+// imports...
+
+@Component
+public class ScheduledService {
+
+    @Autowired
+    private JobLauncher jobLauncher;
+
+    @Autowired
+    private Job importAddressListJob;
+
+    @Scheduled(fixedRate =  1000) // time in millis, for now, just every second, later, every 10 seconds
+    public void importAddressList() throws Exception {
+        Date now = new Date();
+        System.out.println("simulating i'm importing the address list, date/time is:" + now);
+
+        if (new File("work/inbound/contacts.csv").exists()) {
+            JobParameters parameters = //
+                    new JobParametersBuilder() //
+                    .addDate("timestamp", now, true) // to allow repeated executions of the job
+                    .toJobParameters();
+
+            JobExecution execution = jobLauncher.run(importAddressListJob, parameters);
+            System.out.println("job execution: " + execution);
+        } else {
+            System.out.println("there was no file to be processed, so nothing done.");
+        }
+    }
+
+}
+```
+
+**Note:** it is the same logic used in controller, so you may want to extract it in a common place.
+
+### STEP 8. Build & test & enjoy
 
 Follow the next nine actions: (see [exercise 1][EXERCISE-1] for more details)
 
@@ -489,3 +574,4 @@ Follow the next nine actions: (see [exercise 1][EXERCISE-1] for more details)
 [SPRING-BOOT-DATABASE-INITIALIZATION]: https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html
 [SPRING-BOOT-EXTERNALISING-CONFIGURATION]: https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html
 [SPRING-BOOT-SCHEDULED]: https://spring.io/guides/gs/scheduling-tasks/
+[SPRING-SCHEDULING]: http://docs.spring.io/spring/docs/current/spring-framework-reference/html/scheduling.html
