@@ -440,6 +440,27 @@ public class BatchConfiguration {
 
 ### STEP 4. Enable tasks framework
 
+In `Application.java` add the [@EnableScheduling](http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#scheduling-enable-annotation-support) annotation:
+
+```java
+package importaddresslist;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+@SpringBootApplication
+@EnableScheduling // <-- this will ensure that a background task executor is created
+public class Application {
+    public static void main(String... args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+
+```
+
+**Rationale:** see: [Spring Boot Scheduled tasks][SPRING-BOOT-SCHEDULED], also: [http://docs.spring.io/spring/docs/current/spring-framework-reference/html/scheduling.html](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/scheduling.html)
+
 ### STEP 5. Create a service that will be called periodically
 
 ### STEP 6. Use the service to launch the job
