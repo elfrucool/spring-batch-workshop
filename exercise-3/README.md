@@ -295,7 +295,7 @@ work/inbound
 work/outbound
 ```
 
-The `inbound` directory is for putting the `contacts.csv` files to be processed, while the `outbound` directory is the place where the job will put the already processed `contacts.csv` files with the name convention: `contacts-YYMMDD__HHMMSS.csv`.
+The `inbound` directory is for putting the `contacts.csv` files to be processed, while the `outbound` directory is the place where the job will put the already processed `contacts.csv` files with the name convention: `contacts-YYYYMMDD_HHMMSS.csv`.
  
 The reason to append the date-time to the name of the file is for, in case of a problem, easily identify which file caused the error.
 
@@ -362,6 +362,81 @@ public class ImportAddressController {
 ```
 
 ### STEP 3. Add a step to move the processed file from inbound to outbound
+
+You need to take two actions:
+
+1. Create the step, and
+1. Add the step into the job
+
+#### Action 1: create the step
+
+```java
+package importaddresslist;
+
+//imports...
+
+@Configuration
+@EnableBatchProcessing
+public class BatchConfiguration {
+    // other stuff...
+
+    @Bean
+    public Step moveProcessedFileToOutboundStep(StepBuilderFactory steps) {
+        return steps
+                .get("MoveProcessedFileToOutboundStep")
+                .tasklet((contribution, chunkContext) -> {
+                    Path from = new File("work/inbound/contacts.csv").toPath();
+                    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+                    String toFileName = String.format("work/outbound/contacts-%s.csv", dateFormat.format(new Date()));
+                    Path toPath = new File(toFileName).toPath();
+                    Files.move(from, toPath);
+                    return RepeatStatus.FINISHED;
+                })
+                .build();
+    }
+
+    // other stuff...
+}
+```
+
+**Further reading:** about moving files using java.nio.* see: [https://docs.oracle.com/javase/tutorial/essential/io/move.html](https://docs.oracle.com/javase/tutorial/essential/io/move.html) and [https://docs.oracle.com/javase/tutorial/essential/io/pathClass.html](https://docs.oracle.com/javase/tutorial/essential/io/pathClass.html)
+
+#### Action 2: add the step into the job
+
+```java
+package importaddresslist;
+
+//imports...
+
+@Configuration
+@EnableBatchProcessing
+public class BatchConfiguration {
+    // other stuff...
+
+    @Bean
+    public Step moveProcessedFileToOutboundStep(StepBuilderFactory steps) {
+        // implementation
+    }
+
+    @Bean
+    public Job importAddressListJob(
+            JobBuilderFactory jobs,
+            Step importAddressListStep,
+            Step verifyImportStep,
+            Step moveProcessedFileToOutboundStep) { // <-- this last parameter
+        return jobs.get("ImportAddressListJob") //
+                .incrementer(new RunIdIncrementer()) //
+                .start(importAddressListStep) //
+                .next(verifyImportStep) //
+                .next(moveProcessedFileToOutboundStep) // <-- this 'next' call
+                .build();
+    }
+
+    // other stuff...
+}
+```
+
+**Note:** you man see that the date/time is not the current one (it happened to me) this is because the JVM is probably running in other time zone (in my case GMT+0)
 
 ### STEP 4. Enable tasks framework
 

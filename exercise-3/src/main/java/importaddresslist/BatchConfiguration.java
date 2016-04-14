@@ -16,17 +16,19 @@ import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.repeat.RepeatStatus;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableBatchProcessing
@@ -107,14 +109,31 @@ public class BatchConfiguration {
     }
 
     @Bean
+    public Step moveProcessedFileToOutboundStep(StepBuilderFactory steps) {
+        return steps
+                .get("MoveProcessedFileToOutboundStep")
+                .tasklet((contribution, chunkContext) -> {
+                    Path from = new File("work/inbound/contacts.csv").toPath();
+                    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+                    String toFileName = String.format("work/outbound/contacts-%s.csv", dateFormat.format(new Date()));
+                    Path toPath = new File(toFileName).toPath();
+                    Files.move(from, toPath);
+                    return RepeatStatus.FINISHED;
+                })
+                .build();
+    }
+
+    @Bean
     public Job importAddressListJob(
             JobBuilderFactory jobs,
             Step importAddressListStep,
-            Step verifyImportStep) {
+            Step verifyImportStep,
+            Step moveProcessedFileToOutboundStep) {
         return jobs.get("ImportAddressListJob") //
                 .incrementer(new RunIdIncrementer()) //
                 .start(importAddressListStep) //
                 .next(verifyImportStep) //
+                .next(moveProcessedFileToOutboundStep) //
                 .build();
     }
 }
