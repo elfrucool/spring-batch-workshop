@@ -24,7 +24,7 @@ public class ScheduledService {
     @Scheduled(fixedRate =  10000) // every 10 seconds
     public void importAddressList() throws Exception {
         Date now = new Date();
-        System.out.println("simulating i'm importing the address list, date/time is:" + now);
+        System.out.println("Importing the address list, date/time is:" + now);
 
         if (new File("work/inbound/contacts.csv").exists()) {
             JobParameters parameters = //
