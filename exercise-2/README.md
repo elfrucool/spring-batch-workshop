@@ -158,7 +158,7 @@ As in [Exercise 1][EXERCISE-1], just create a method to define the job bean insi
 public class BatchConfiguration {
 
     @Bean
-    public Job helloWorldJob(JobBuilderFactory jobs, Step importAddressListStep) {
+    public Job importAddressListJob(JobBuilderFactory jobs, Step importAddressListStep) {
         return jobs.get("ImportAddressListJob") //
                 .incrementer(new RunIdIncrementer()) //
                 .start(importAddressListStep)
@@ -180,7 +180,7 @@ Add the following method to the `BatchConfiguration` class:
 @EnableBatchProcessing
 public class BatchConfiguration {
 
-    // helloWorldJob() {...}
+    // importAddressListJob() {...}
 
     @Bean
     public Step importAddressListStep(
@@ -214,7 +214,7 @@ Create a method to instantiate the reader:
 @EnableBatchProcessing
 public class BatchConfiguration {
 
-    // helloWorldJob() {...}
+    // importAddressListJob() {...}
 
     // importAddressListStep() {...}
 
@@ -257,7 +257,7 @@ Feel free to add some custom code such as logging, changing case, etc.
 @EnableBatchProcessing
 public class BatchConfiguration {
 
-    // helloWorldJob() {...}
+    // importAddressListJob() {...}
 
     // importAddressListStep() {...}
 
@@ -283,7 +283,7 @@ Add a method to instantiate the `ItemWriter` object configured to write to datab
 @EnableBatchProcessing
 public class BatchConfiguration {
 
-    // helloWorldJob() {...}
+    // importAddressListJob() {...}
 
     // importAddressListStep() {...}
 
@@ -329,7 +329,7 @@ You need to follow the next 2 steps:
     public class BatchConfiguration {
     
         @Bean
-        public Job helloWorldJob(JobBuilderFactory jobs, Step importAddressListStep, Step verifyImportStep) {
+        public Job importAddressListJob(JobBuilderFactory jobs, Step importAddressListStep, Step verifyImportStep) {
             return jobs.get("ImportAddressListJob") //
                     .incrementer(new RunIdIncrementer()) //
                     .start(importAddressListStep) //
@@ -348,7 +348,7 @@ You need to follow the next 2 steps:
     }
     ```
     
-    We are introducing two changes to `helloWorldJob` method:
+    We are introducing two changes to `importAddressListJob` method:
     
     1. We are adding a new `verifyImportStep` parameter
     1. We are adding that step as `next` step
@@ -363,7 +363,7 @@ You need to follow the next 2 steps:
     @EnableBatchProcessing
     public class BatchConfiguration {
     
-        // helloWorldJob() {...}
+        // importAddressListJob() {...}
     
         // importAddressListStep() {...}
     
