@@ -559,7 +559,6 @@ Follow the next eight actions: (see [exercise 1][EXERCISE-1] for more details)
 1. look at your batchworkshop database, examine all tables and learn
 1. put another file in the `inbound` folder and see what happens.
 1. how could you clean the `contacts` table before importing new records ?
-1. how do you read files named `contacts*.csv` ( [a.k.a. wilcards][BATCH-READERS-WRITERS] ) ?
 
 <!-- global links -->
 
@@ -575,4 +574,3 @@ Follow the next eight actions: (see [exercise 1][EXERCISE-1] for more details)
 [SPRING-BOOT-EXTERNALISING-CONFIGURATION]: https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html
 [SPRING-BOOT-SCHEDULED]: https://spring.io/guides/gs/scheduling-tasks/
 [SPRING-SCHEDULING]: http://docs.spring.io/spring/docs/current/spring-framework-reference/html/scheduling.html
-[BATCH-READERS-WRITERS]: http://docs.spring.io/spring-batch/reference/html/readersAndWriters.html
