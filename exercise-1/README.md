@@ -147,6 +147,7 @@ Steps in detail:
     dependencies {
         // this dependency brings all we need: spring batch + in-memory database + tests
         compile("org.springframework.boot:spring-boot-starter-batch")
+        compile("org.hsqldb:hsqldb") // if you miss this: spring batch will complain for missing data source
         testCompile("junit:junit")
     }
     ```

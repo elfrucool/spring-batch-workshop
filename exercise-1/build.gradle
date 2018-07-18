@@ -26,5 +26,6 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-batch")
+    compile("org.hsqldb:hsqldb") // if you miss this: spring batch will complain for missing data source
     testCompile("junit:junit")
 }
