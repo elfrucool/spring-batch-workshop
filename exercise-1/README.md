@@ -106,6 +106,7 @@ Steps in detail:
     ```groovy
     apply plugin: 'java' // for use java
     apply plugin: 'org.springframework.boot' // special gradle tasks for spring-boot
+    apply plugin: 'io.spring.dependency-management' // required for managing versions of spring
     ```
 
     <strong>Rationale:</strong> See [About Gradle Plugins](https://docs.gradle.org/current/userguide/plugins.html), [Java Gradle Plugin][GRADLE-JAVA-PLUGIN] and [Spring Boot Gradle Plugin][SPRING-BOOT-GRADLE-PLUGIN]
