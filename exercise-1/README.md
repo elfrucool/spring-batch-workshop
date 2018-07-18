@@ -94,7 +94,7 @@ Steps in detail:
             mavenLocal()
         }
         dependencies {
-            classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.1.RELEASE")
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE")
         }
     }
     ```
@@ -105,7 +105,7 @@ Steps in detail:
 
     ```groovy
     apply plugin: 'java' // for use java
-    apply plugin: 'spring-boot' // special gradle tasks for spring-boot
+    apply plugin: 'org.springframework.boot' // special gradle tasks for spring-boot
     ```
 
     <strong>Rationale:</strong> See [About Gradle Plugins](https://docs.gradle.org/current/userguide/plugins.html), [Java Gradle Plugin][GRADLE-JAVA-PLUGIN] and [Spring Boot Gradle Plugin][SPRING-BOOT-GRADLE-PLUGIN]
@@ -249,6 +249,7 @@ Details:
                 System.out.println("=================================================");
                 return RepeatStatus.FINISHED;
             };
+        }
     }
     ```
 
