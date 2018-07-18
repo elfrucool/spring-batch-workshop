@@ -413,7 +413,7 @@ Follow the next three steps: (see [exercise 1][EXERCISE-1] for more details)
 
 Try to do the following four things:
 
-1. Use `contacts-big.csv` file and see the results.
+1. Use [contacts-big.csv][CONTACTS-BIG-FILE] file and see the results.
 1. Add an additional column `birth_date` to both the csv file and the database, and import/dump it
 1. Add a logic in ItemProcessor: when name is 'Echo' then return null (this will filter out that row)
 1. Change the _VerifyImportStep_ to use: reader/processor/writer instead of single monolytic tasklet (you may need to rename some function/beans to differentiate readers/processors/writers for each step.
@@ -428,3 +428,4 @@ Try to do the following four things:
 [BATCH-ITEM-WRITER]: https://docs.spring.io/spring-batch/apidocs/org/springframework/batch/item/ItemWriter.html
 [EXERCISE-1]: https://github.com/rvazquezglez/spring-batch-workshop/tree/master/exercise-1/README.md
 [SPRING-BOOT-DATABASE-INITIALIZATION]: https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html
+[CONTACTS-BIG-FILE]: https://github.com/rvazquezglez/spring-batch-workshop/blob/master/work/inbound/contacts-big.csv
