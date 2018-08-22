@@ -37,7 +37,6 @@ In `build.gradle` add a dependency to the JDBC driver (erase/comment the existen
 
 ```groovy
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-batch")
     compile("org.springframework.boot:spring-boot-starter-jdbc") // <-- to create externalised DataSource beans
     compile("org.postgresql:postgresql:9.4.1208.jre7") // <-- instead of org.hsqldb:hsqldb
@@ -125,6 +124,7 @@ See https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-de
 
 ```groovy
 dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web") // <-- web application
     compile("org.springframework.boot:spring-boot-starter-thymeleaf") // <-- spring mvc with thymeleaf template engine
     compile("org.springframework.boot:spring-boot-devtools") // <-- to restart/reload if something changes
     compile("org.springframework.boot:spring-boot-starter-batch")
