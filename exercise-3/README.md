@@ -61,6 +61,9 @@ spring.datasource.username=postgres
 spring.datasource.password=
 spring.datasource.driver-class-name=org.postgresql.Driver
 spring.datasource.continueOnError=true
+# these properties are for auto-schema generation for both your application and the spring batch tables
+spring.datasource.initialization-mode=always
+spring.batch.initialize-schema=always
 ```
 
 <strong>Important Note:</strong> Dont forget to put the property `spring.datasource.continueOnError=true` it is your friend to launch your application again and again (see references below).
